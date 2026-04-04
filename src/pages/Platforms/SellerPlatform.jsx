@@ -10,7 +10,7 @@ const SellerPlatform = () => {
   const sellItems = ['Textile Raw Materials', 'Textile Finished Products', 'Textile Machineries', 'Textile Spares'];
 
   const inputStyle = "w-full p-4 bg-white/90 backdrop-blur-md border border-slate-200 rounded-2xl outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100/50 transition-all text-sm font-medium shadow-sm";
-  const labelStyle = "block text-[11px] font-black text-slate-500 uppercase mb-2 ml-1";
+  const labelStyle = "block text-[11px] font-black text-slate-600 uppercase mb-2 ml-1";
 
   return (
     <div className="min-h-screen bg-[#f0f4f8] font-sans relative overflow-hidden">
@@ -143,7 +143,7 @@ const SellerPlatform = () => {
                   <input type="file" multiple className="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer" />
                   <div className="p-8 border-2 border-dashed border-slate-700 rounded-3xl flex flex-col items-center justify-center bg-white/5 group-hover/upload:bg-white/10 transition-all duration-300">
                     <p className="text-sm font-bold text-slate-300 mb-1 uppercase tracking-widest">Select Files</p>
-                    <p className="text-[10px] text-slate-500 font-black">MAX FILE SIZE 10MB (PDF/JPG)</p>
+                    <p className="text-[10px] text-slate-600 font-black">MAX FILE SIZE 10MB (PDF/JPG)</p>
                   </div>
                 </div>
               </div>
@@ -211,7 +211,7 @@ const SellerPlatform = () => {
             <motion.div initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} className="bg-white rounded-[3rem] w-full max-w-2xl p-12 relative border border-white">
               <div className="absolute top-0 left-0 w-full h-3 bg-blue-600"></div>
               <h3 className="text-3xl font-black text-slate-900 mb-6 uppercase ">Profile Review</h3>
-              <p className="text-sm text-slate-500 font-medium mb-10 leading-relaxed">
+              <p className="text-sm text-slate-600 font-medium mb-10 leading-relaxed">
                 Confirm your business details and uploaded certifications. Once submitted, your profile will undergo a 24-hour verification cycle by PAREKH e-TRADE MARKET officials.
               </p>
               <button onClick={() => setShowPreview(false)} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl uppercase tracking-widest text-xs shadow-xl shadow-blue-200">

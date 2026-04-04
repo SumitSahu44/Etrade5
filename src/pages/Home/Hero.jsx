@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-
+import { Link } from 'react-router-dom'; // Link import karna mat bhulna
 const Hero = () => {
   return (
     <section className="relative h-[80vh] flex items-center justify-center bg-slate-900 text-white overflow-hidden">
@@ -27,20 +27,31 @@ const Hero = () => {
           Machineries, and Spares - All in one secure platform.
         </motion.p>
 
-        <div className="flex flex-col md:flex-row gap-4 justify-center">
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold"
-          >
-            Buyer Platform
-          </motion.button>
-          <motion.button 
-            whileHover={{ scale: 1.05 }}
-            className="bg-transparent border-2 border-white hover:bg-white hover:text-black text-white px-8 py-4 rounded-lg font-bold transition"
-          >
-            Seller Platform
-          </motion.button>
-        </div>
+       <div className="flex flex-col md:flex-row gap-6 justify-center items-center mt-10">
+      
+      {/* --- BUYER PLATFORM LINK --- */}
+      <Link to="/buyer" className="w-full md:w-auto">
+        <motion.button 
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="w-full md:w-auto bg-blue-600 hover:bg-blue-700 text-white px-10 py-4 rounded-xl font-black uppercase text-xs tracking-widest shadow-xl shadow-blue-500/20 transition-all"
+        >
+          Buyer Platform
+        </motion.button>
+      </Link>
+
+      {/* --- SELLER PLATFORM LINK --- */}
+      <Link to="/seller" className="w-full md:w-auto">
+        <motion.button 
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+          className="w-full md:w-auto bg-transparent border-2 border-white hover:bg-white hover:text-slate-900 text-white px-10 py-4 rounded-xl font-black uppercase text-xs tracking-widest transition-all backdrop-blur-sm"
+        >
+          Seller Platform
+        </motion.button>
+      </Link>
+
+    </div>
       </div>
     </section>
   );
