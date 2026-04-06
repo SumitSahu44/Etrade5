@@ -39,7 +39,7 @@ const Footer = () => {
               <span className="text-2xl font-black text-white tracking-tighter  leading-none transition-colors group-hover:text-blue-500">
                 PAREKH <span className="text-blue-600">e-TRADE</span>
               </span>
-              <span className="text-[10px] font-bold text-slate-500 tracking-[0.3em] uppercase">Market (Textile) Hub</span>
+              <span className="text-[10px] font-bold text-slate-500 tracking-[0.3em] uppercase">Market (Textile)</span>
             </Link>
             
             <p className="text-sm leading-relaxed font-medium">

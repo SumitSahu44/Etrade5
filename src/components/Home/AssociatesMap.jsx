@@ -4,11 +4,7 @@ import { MapPin, Globe, CheckCircle2 } from 'lucide-react';
 
 const AssociatesMap = () => {
   const hubs = [
-    { city: 'Hyderabad (HQ)', type: 'Central Operations' },
-    { city: 'Surat Hub', type: 'Textile Manufacturing' },
-    { city: 'Bhiwandi Center', type: 'Logistics & Warehousing' },
-    { city: 'Ludhiana Unit', type: 'Machinery & Spares' }
-  ];
+    ];
 
   return (
     <section className="py-24 bg-white overflow-hidden">

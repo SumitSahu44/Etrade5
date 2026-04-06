@@ -12,9 +12,11 @@ const Navbar = () => {
   const mainLinks = [
     { name: 'Home', path: '/' },
     { name: 'About Us', path: '/about' },
+     { name: 'Contact Us', path: '/contact' },
+       { name: 'Product & Services', path: '/marketplace' },
     { name: 'Buyer Platform', path: '/buyer' },
     { name: 'Seller Platform', path: '/seller' },
-    { name: 'Products', path: '/marketplace' },
+  
   ];
 
   // Dropdown links
@@ -28,10 +30,11 @@ const Navbar = () => {
     { name: 'Career Page', path: '/careers' },
     { name: 'Circular', path: '/circulars' },
     { name: 'Blog', path: '/blog' },
+      { name: 'Visit with Appointment', path: '/appointment' },
     { name: 'Media Gallery', path: '/media' },
-    { name: 'India Map', path: '/associates' },
-    { name: 'Appointment', path: '/appointment' },
-    { name: 'Contact Us', path: '/contact' },
+    { name: 'Our Textile Associates', path: '/associates' },
+  
+   
   ];
 
   // --- THEME COLORS ---
@@ -61,7 +64,7 @@ const Navbar = () => {
                   Market (Textile)
                 </span>
               </h1>
-              <p className="text-[9px] font-bold tracking-[0.2em] text-blue-400 uppercase">
+              <p className="text-[9px] font-bold tracking-[0.1em] text-blue-500 uppercase">
                 Hyderabad, TG, India
               </p>
             </div>

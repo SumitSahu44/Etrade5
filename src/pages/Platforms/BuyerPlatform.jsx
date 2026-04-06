@@ -42,7 +42,7 @@ const BuyerPlatform = () => {
           <h2 className="text-5xl md:text-6xl font-bold text-white mb-4  uppercase leading-none">
             Buyer's <span className="text-blue-500 text-outline">Platform</span>
           </h2>
-          <p className="text-slate-400 font-medium max-w-xl mx-auto text-sm md:text-base">
+          <p className="text-white font-medium max-w-xl mx-auto text-sm md:text-base">
             Source premium raw materials, machineries, and spares through a verified B2B e-trade environment.
           </p>
         </div>

@@ -27,6 +27,7 @@ import Management from './pages/About/Management';
 import Quotation from './pages/Trade/Quotation';
 import Blog from './pages/Media/Blog';
 import ScrollToTop from './components/Common/ScrollToTop'; // To ensure we scroll to top on route change
+import TextileChatbot from './components/Common/TextileChatbot';
 function App() {
   return (
     <Router>
@@ -72,14 +73,8 @@ function App() {
         </main>
 
         {/* Floating WhatsApp - Stays across all pages */}
-        <a 
-          href="https://wa.me/yournumber" 
-          target="_blank" 
-          rel="noreferrer"
-          className="fixed bottom-8 right-8 bg-green-500 p-4 rounded-full shadow-2xl hover:scale-110 transition-transform z-50 flex items-center justify-center"
-        >
-          <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" className="w-8 h-8" alt="WhatsApp" />
-        </a>
+      
+        <TextileChatbot /> {/* Textile-specific chatbot component */}
           <Footer /> {/* Footer added outside main to ensure it's always at the bottom */}
    
       </div>
