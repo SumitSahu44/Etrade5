@@ -195,11 +195,7 @@ const SellerPlatform = () => {
               </button>
             </div>
 
-            <div className="text-center pt-4">
-              <p className="text-[10px] font-black text-slate-400 tracking-widest">
-                System Support: <a href="mailto:e-trade@parekhtrade.com" className="text-blue-600 underline">e-trade@parekhtrade.com</a>
-              </p>
-            </div>
+          
           </form>
         </div>
       </div>

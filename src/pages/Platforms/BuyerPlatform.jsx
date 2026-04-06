@@ -62,7 +62,7 @@ const BuyerPlatform = () => {
                 </div>
                 <div>
                    <h3 className="font-black text-slate-900 uppercase  text-xl leading-none">Official Authorization</h3>
-                   <p className="text-[10px] font-bold text-slate-400 uppercase  mt-1">E-Trade Market Credentials</p>
+                   <p className="text-[10px] font-bold text-slate-400   mt-1">e-Trade Market Credentials</p>
                 </div>
               </div>
               <div>
@@ -205,11 +205,7 @@ const BuyerPlatform = () => {
               </button>
             </div>
             
-            <div className="text-center pt-4">
-              <p className="text-[10px] font-black text-slate-400  uppercase">
-                Official Webmail: <span className="text-blue-600 underline">e-trade@parekhtrade.com</span>
-              </p>
-            </div>
+          
           </form>
         </div>
       </div>

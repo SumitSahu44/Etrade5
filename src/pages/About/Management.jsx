@@ -15,7 +15,7 @@ const Management = () => {
       {/* Dark Texture Overlay for the Header */}
       <div className="absolute top-0 left-0 w-full h-[45vh] bg-slate-950 overflow-hidden">
         <img 
-          src="https://images.unsplash.com/photo-1551278135-21d120d88031?auto=format&fit=crop&q=80" 
+          src="https://plus.unsplash.com/premium_photo-1664299852788-5a24db0d7e05?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dGV4dGlsZXxlbnwwfHwwfHx8MA%3D%3D" 
           className="w-full h-full object-cover opacity-20"
           alt="Textile Texture"
         />

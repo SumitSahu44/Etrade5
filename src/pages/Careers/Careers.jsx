@@ -25,7 +25,7 @@ const Careers = () => {
           <motion.div 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="inline-block px-4 py-1.5 bg-blue-600/20 border border-blue-500/30 text-blue-400 rounded-full text-[10px] font-black uppercase tracking-[0.3em] mb-6"
+            className="inline-block px-4 py-1.5 bg-blue-600/20 border border-blue-500/30 text-blue-400 rounded-full text-[10px] font-black  tracking-[0.3em] mb-6"
           >
             Work with Parekh e-Trade
           </motion.div>

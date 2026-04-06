@@ -51,10 +51,9 @@ const Quotation = () => {
             </div>
             <div className="text-right flex flex-col items-end">
               <div className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">
-                e-Form Mode
+              Form Mode
               </div>
-              <p className="text-xs font-bold text-slate-400 mt-4 italic text-right">Generate official quotes for the textile marketplace.</p>
-            </div>
+               </div>
           </div>
 
           <form className="p-10 md:p-14 space-y-8">
@@ -153,14 +152,12 @@ const Quotation = () => {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 type="submit"
-                className="w-full md:w-auto px-12 py-5 bg-slate-900 text-white rounded-2xl font-black text-xs uppercase tracking-[0.3em] shadow-2xl hover:bg-blue-600 transition-all flex items-center justify-center gap-3"
+                className="w-full md:w-auto px-12 py-5 bg-slate-900 text-white rounded-2xl font-black text-xs  tracking-[0.2em] shadow-2xl hover:bg-blue-600 transition-all flex items-center justify-center gap-3"
               >
                 Submit e-Quotation <Send size={16} />
               </motion.button>
               
-              <button type="button" className="flex items-center gap-2 text-[10px] font-black text-slate-400 tracking-[0.3em] hover:text-blue-600 transition-colors">
-                Official Trade Market Document • Parekh e-Trade
-              </button>
+          
             </div>
 
           </form>

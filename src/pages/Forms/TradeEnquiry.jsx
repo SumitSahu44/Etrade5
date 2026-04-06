@@ -31,7 +31,7 @@ const TradeEnquiry = () => {
             <div>
               <div className="flex items-center gap-2 text-blue-600 mb-3">
                 <Globe size={18} className="animate-spin-slow" />
-                <span className="text-[10px] font-black uppercase tracking-[0.3em]">Trade Enquiry (e-Form)</span>
+                <span className="text-[10px] font-black uppercase tracking-[0.3em]">Trade Enquiry</span>
               </div>
               <h2 className="text-4xl font-bold text-slate-900 tracking-tighter uppercase leading-none">
                 B2B <span className="text-blue-600">Portal</span>

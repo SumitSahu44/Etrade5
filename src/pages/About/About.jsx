@@ -112,7 +112,7 @@ const About = () => {
                 </div>
                 <div className="p-10">
                   <h3 className="font-bold text-2xl text-slate-900 mb-1">{member.name}</h3>
-                  <p className="text-blue-600 font-black text-xs uppercase tracking-widest">{member.role}</p>
+                  <p className="text-blue-600 font-black text-xs  tracking-widest">{member.role}</p>
                   <div className="w-10 h-1 bg-slate-100 mx-auto mt-6 rounded-full group-hover:w-20 group-hover:bg-blue-600 transition-all duration-500"></div>
                 </div>
               </motion.div>
