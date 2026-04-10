@@ -27,6 +27,7 @@ import Management from './pages/About/Management';
 import Quotation from './pages/Trade/Quotation';
 import Blog from './pages/Media/Blog';
 import ScrollToTop from './components/Common/ScrollToTop'; // To ensure we scroll to top on route change
+import AdminDashboard from './pages/Admin/AdminDashboard';
 import TextileChatbot from './components/Common/TextileChatbot';
 function App() {
   return (
@@ -69,6 +70,7 @@ function App() {
 <Route path="/quotation" element={<Quotation />} />
 <Route path="/blog" element={<Blog />} />
 <Route path="/associates" element={<AssociatesMap />} />
+<Route path="/admin-dashboard" element={<AdminDashboard />} />
           </Routes>
         </main>
 

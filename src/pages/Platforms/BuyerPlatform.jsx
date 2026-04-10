@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { UserCheck, Building2, ShoppingBag, FolderLock, Eye, SendHorizontal, CheckCircle } from 'lucide-react';
+import { UserCheck, Building2, ShoppingBag, FolderLock, Eye, SendHorizontal, CheckCircle, LockKeyhole, Loader2 } from 'lucide-react';
 
 const BuyerPlatform = () => {
   const [showPreview, setShowPreview] = useState(false);
+  const [isValidated, setIsValidated] = useState(false);
+  const [authName, setAuthName] = useState('');
+  const [authCode, setAuthCode] = useState('');
+  const [validating, setValidating] = useState(false);
+  const [authId, setAuthId] = useState(null);
+  const [submitting, setSubmitting] = useState(false);
 
   const businessNatures = ['Retailer', 'Wholesaler', 'Manufacturer'];
   const businessCategories = ['Proprietorship', 'Partnership', 'LLP', 'Private Limited', 'Ltd.', 'Other'];
@@ -14,6 +20,91 @@ const BuyerPlatform = () => {
     'Textile other Machineries', 
     'Textile Spares'
   ];
+
+  const handleValidate = async () => {
+    if (!authName || !authCode) {
+      alert("Please enter both Name and Code.");
+      return;
+    }
+    setValidating(true);
+    try {
+      // Connect to the unified backend running on 4000
+      const response = await fetch('http://localhost:5000/api/authorized-person/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: authName, code: authCode })
+      });
+      const data = await response.json();
+      if (data.success) {
+        setAuthId(data.data._id);
+        setIsValidated(true);
+      } else {
+        alert(data.message || 'Validation failed. Invalid credentials.');
+        setIsValidated(false);
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error connecting to backend.');
+    } finally {
+      setValidating(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!isValidated) {
+      alert("Please validate Authorized Official first.");
+      return;
+    }
+
+    const form = e.target;
+    // Simple HTML5 FormData approach
+    const formData = new FormData();
+    formData.append('authorizedPersonId', authId);
+    formData.append('buyerName', form.buyerName.value);
+    formData.append('businessTitle', form.businessTitle.value);
+    formData.append('businessAddress', form.businessAddress.value);
+    formData.append('mobileNo', form.mobileNo.value);
+    formData.append('emailId', form.emailId.value);
+    formData.append('websiteUrl', form.websiteUrl.value);
+    formData.append('natureOfBusiness', form.natureOfBusiness.value);
+    formData.append('categoryOfBusiness', form.categoryOfBusiness.value);
+    formData.append('chamberMembership', form.chamberMembership.value);
+    
+    // File inputs
+    const files = form.kycDocuments.files;
+    for (let i = 0; i < files.length; i++) {
+        formData.append('kycDocuments', files[i]);
+    }
+
+    formData.append('textileItemsToBuy', form.textileItemsToBuy.value);
+    formData.append('itemDescription', form.itemDescription.value);
+    formData.append('requiredQuantity', form.requiredQuantity.value);
+    formData.append('tentativeRate', form.tentativeRate.value);
+    formData.append('tentativeBudget', form.tentativeBudget.value);
+    formData.append('siteId', 'ParekhETradeMarket02');
+
+    setSubmitting(true);
+    setShowPreview(false); // Make sure modal closes
+    try {
+      const response = await fetch('http://localhost:5000/api/etrade/buyer', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await response.json();
+      if (data.success) {
+        alert("Form submitted successfully! Check email.");
+        window.location.reload();
+      } else {
+        alert(data.message || 'Error submitting form.');
+      }
+    } catch (err) {
+      console.error(err);
+      alert('Error connecting to backend.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   const inputStyle = "w-full p-4 bg-white/90 backdrop-blur-md border border-slate-200 rounded-2xl outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100/50 transition-all text-sm font-medium shadow-sm";
   const labelStyle = "block text-[11px] font-black text-slate-600 uppercase  mb-2 ml-1";
@@ -52,10 +143,10 @@ const BuyerPlatform = () => {
       <div className="max-w-5xl mx-auto px-6 -mt-32 pb-20 relative z-20">
         <div className="bg-white/80 backdrop-blur-xl rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] border border-white overflow-hidden">
           
-          <form className="p-8 md:p-16 space-y-16">
+          <form onSubmit={handleSubmit} className="p-8 md:p-16 space-y-16">
             
             {/* Section 1: Official Authorization */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
               <div className="md:col-span-2 flex items-center gap-4">
                 <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-blue-200">
                   <UserCheck size={24} />
@@ -67,145 +158,177 @@ const BuyerPlatform = () => {
               </div>
               <div>
                 <label className={labelStyle}>Authorized Official Name</label>
-                <input type="text" placeholder="Full Name" className={inputStyle} />
+                <input 
+                  type="text" 
+                  value={authName} onChange={(e) => setAuthName(e.target.value)} 
+                  disabled={isValidated}
+                  placeholder="Full Name" 
+                  className={inputStyle} 
+                />
               </div>
               <div>
                 <label className={labelStyle}>Code No.</label>
-                <input type="text" placeholder="Assigned Code" className={inputStyle} />
+                <input 
+                  type="text" 
+                  value={authCode} onChange={(e) => setAuthCode(e.target.value)} 
+                  disabled={isValidated}
+                  placeholder="Assigned Code" 
+                  className={inputStyle} 
+                />
+              </div>
+              <div className="md:col-span-2 flex justify-end mt-[-10px]">
+                {!isValidated ? (
+                  <button type="button" onClick={handleValidate} disabled={validating} className="py-3 px-8 bg-slate-900 text-white rounded-xl font-bold uppercase text-[10px] hover:bg-slate-800 transition flex items-center gap-2">
+                    {validating ? <Loader2 className="animate-spin" size={16} /> : <LockKeyhole size={16} />} 
+                    Validate Access
+                  </button>
+                ) : (
+                  <div className="py-2 px-6 bg-green-100 text-green-700 rounded-xl font-bold uppercase text-[10px] flex items-center gap-2">
+                    <CheckCircle size={16} /> Access Granted
+                  </div>
+                )}
               </div>
             </div>
 
-            {/* Section 2: Buyer's Details */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-10 border-t border-slate-100">
-              <div className="md:col-span-2 flex items-center gap-4">
-                <div className="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-white shadow-xl">
-                  <Building2 size={24} />
-                </div>
-                <h3 className="font-black text-slate-900 uppercase  text-xl">Business Information</h3>
-              </div>
-              <div>
-                <label className={labelStyle}>Name of the Buyer</label>
-                <input type="text" className={inputStyle} />
-              </div>
-              <div>
-                <label className={labelStyle}>Title of the Business</label>
-                <input type="text" className={inputStyle} />
-              </div>
-              <div className="md:col-span-2">
-                <label className={labelStyle}>Address of the Business</label>
-                <textarea className={`${inputStyle} h-28 resize-none`} placeholder="Complete Office Address"></textarea>
-              </div>
-              <div>
-                <label className={labelStyle}>Mobile No.</label>
-                <input type="tel" className={inputStyle} />
-              </div>
-              <div>
-                <label className={labelStyle}>Email Id</label>
-                <input type="email" className={inputStyle} />
-              </div>
-              <div>
-                <label className={labelStyle}>Website URL (If any)</label>
-                <input type="url" placeholder="https://" className={inputStyle} />
-              </div>
-              <div>
-                <label className={labelStyle}>Nature of Business</label>
-                <select className={inputStyle}>
-                  <option value="">Select Nature</option>
-                  {businessNatures.map(n => <option key={n} value={n}>{n}</option>)}
-                </select>
-              </div>
-              <div>
-                <label className={labelStyle}>Category of Business</label>
-                <select className={inputStyle}>
-                  <option value="">Select Category</option>
-                  {businessCategories.map(c => <option key={c} value={c}>{c}</option>)}
-                </select>
-              </div>
-              <div className="md:col-span-2">
-                <label className={labelStyle}>Membership in Chamber of Textile (If any)</label>
-                <input type="text" className={inputStyle} />
-              </div>
-            </div>
-
-            {/* Section 3: Secure Document Vault (DARK THEME) */}
-            <div className="p-10 bg-slate-950 rounded-[2.5rem] text-white relative overflow-hidden group">
-               {/* Pattern for dark section */}
-               <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity" 
-                  style={{ backgroundImage: `linear-gradient(45deg, #2563eb 25%, transparent 25%, transparent 50%, #2563eb 50%, #2563eb 75%, transparent 75%, transparent)`, backgroundSize: '4px 4px' }}>
-               </div>
-               
-              <div className="relative z-10">
-                <div className="flex items-center gap-3 mb-6 text-blue-400">
-                  <FolderLock size={28} />
-                  <h3 className="font-black uppercase  text-xl">KYC Document Vault</h3>
-                </div>
-                <p className="text-xs font-medium text-slate-400 mb-8 max-w-md leading-relaxed">
-                  Upload clear copies for verification: <br/>
-                  <span className="text-white font-bold underline decoration-blue-500 underline-offset-4 ">
-                    GST, MSME, Trade License, Labour License, LLP, CIN
-                  </span>
-                </p>
-                <div className="relative cursor-pointer group/upload">
-                  <input type="file" multiple className="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer" />
-                  <div className="p-8 border-2 border-dashed border-slate-700 rounded-3xl flex flex-col items-center justify-center bg-white/5 group-hover/upload:bg-white/10 transition-all duration-300">
-                    <p className="text-sm font-bold text-slate-300 mb-1 uppercase ">Select Files</p>
-                    <p className="text-[10px] text-slate-600 font-black ">MAX 10MB (PDF/JPG/PNG)</p>
+            {/* Render rest of the form ONLY if validated */}
+            <AnimatePresence>
+            {isValidated && (
+              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-16">
+                
+                {/* Section 2: Buyer's Details */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-10 border-t border-slate-100">
+                  <div className="md:col-span-2 flex items-center gap-4">
+                    <div className="w-12 h-12 bg-slate-900 rounded-2xl flex items-center justify-center text-white shadow-xl">
+                      <Building2 size={24} />
+                    </div>
+                    <h3 className="font-black text-slate-900 uppercase  text-xl">Business Information</h3>
+                  </div>
+                  <div>
+                    <label className={labelStyle}>Name of the Buyer</label>
+                    <input type="text" name="buyerName" required className={inputStyle} />
+                  </div>
+                  <div>
+                    <label className={labelStyle}>Title of the Business</label>
+                    <input type="text" name="businessTitle" required className={inputStyle} />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className={labelStyle}>Address of the Business</label>
+                    <textarea name="businessAddress" required className={`${inputStyle} h-28 resize-none`} placeholder="Complete Office Address"></textarea>
+                  </div>
+                  <div>
+                    <label className={labelStyle}>Mobile No.</label>
+                    <input type="tel" name="mobileNo" required className={inputStyle} />
+                  </div>
+                  <div>
+                    <label className={labelStyle}>Email Id</label>
+                    <input type="email" name="emailId" required className={inputStyle} />
+                  </div>
+                  <div>
+                    <label className={labelStyle}>Website URL (If any)</label>
+                    <input type="url" name="websiteUrl" placeholder="https://" className={inputStyle} />
+                  </div>
+                  <div>
+                    <label className={labelStyle}>Nature of Business</label>
+                    <select name="natureOfBusiness" required className={inputStyle}>
+                      <option value="">Select Nature</option>
+                      {businessNatures.map(n => <option key={n} value={n}>{n}</option>)}
+                    </select>
+                  </div>
+                  <div>
+                    <label className={labelStyle}>Category of Business</label>
+                    <select name="categoryOfBusiness" required className={inputStyle}>
+                      <option value="">Select Category</option>
+                      {businessCategories.map(c => <option key={c} value={c}>{c}</option>)}
+                    </select>
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className={labelStyle}>Membership in Chamber of Textile (If any)</label>
+                    <input type="text" name="chamberMembership" className={inputStyle} />
                   </div>
                 </div>
-              </div>
-            </div>
 
-            {/* Section 4: Procurement Requirements */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-10 border-t border-slate-100">
-              <div className="md:col-span-2 flex items-center gap-4">
-                <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-blue-200">
-                  <ShoppingBag size={24} />
+                {/* Section 3: Secure Document Vault (DARK THEME) */}
+                <div className="p-10 bg-slate-950 rounded-[2.5rem] text-white relative overflow-hidden group">
+                  <div className="absolute inset-0 opacity-10 group-hover:opacity-20 transition-opacity" 
+                      style={{ backgroundImage: `linear-gradient(45deg, #2563eb 25%, transparent 25%, transparent 50%, #2563eb 50%, #2563eb 75%, transparent 75%, transparent)`, backgroundSize: '4px 4px' }}>
+                  </div>
+                  
+                  <div className="relative z-10">
+                    <div className="flex items-center gap-3 mb-6 text-blue-400">
+                      <FolderLock size={28} />
+                      <h3 className="font-black uppercase  text-xl">KYC Document Vault</h3>
+                    </div>
+                    <p className="text-xs font-medium text-slate-400 mb-8 max-w-md leading-relaxed">
+                      Upload clear copies for verification: <br/>
+                      <span className="text-white font-bold underline decoration-blue-500 underline-offset-4 ">
+                        GST, MSME, Trade License, Labour License, LLP, CIN
+                      </span>
+                    </p>
+                    <div className="relative cursor-pointer group/upload">
+                      <input type="file" name="kycDocuments" multiple className="absolute inset-0 w-full h-full opacity-0 z-10 cursor-pointer" />
+                      <div className="p-8 border-2 border-dashed border-slate-700 rounded-3xl flex flex-col items-center justify-center bg-white/5 group-hover/upload:bg-white/10 transition-all duration-300">
+                        <p className="text-sm font-bold text-slate-300 mb-1 uppercase ">Select Files</p>
+                        <p className="text-[10px] text-slate-600 font-black ">MAX 10MB (PDF/JPG/PNG)</p>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-                <h3 className="font-black text-slate-900 uppercase  text-xl">Procurement Details</h3>
-              </div>
-              <div className="md:col-span-2">
-                <label className={labelStyle}>Textile Items to Buy (Roll-down mode)</label>
-                <select className={inputStyle}>
-                  <option value="">Select Item Category</option>
-                  {textileItems.map(item => <option key={item} value={item}>{item}</option>)}
-                </select>
-              </div>
-              <div className="md:col-span-2">
-                <label className={labelStyle}>Description of the items to buy</label>
-                <textarea className={`${inputStyle} h-28 resize-none`} placeholder="Specify Material, Grade, Loom Type, or Spare Specs..."></textarea>
-              </div>
-              <div>
-                <label className={labelStyle}>Required Quantity</label>
-                <input type="text" className={inputStyle} />
-              </div>
-              <div>
-                <label className={labelStyle}>Tentative Rate for Buying</label>
-                <input type="text" className={inputStyle} />
-              </div>
-              <div className="md:col-span-2">
-                <label className={labelStyle}>Tentative Budget for Buying</label>
-                <input type="text" className={inputStyle} />
-              </div>
-            </div>
 
-            {/* Action Buttons */}
-            <div className="flex flex-col md:flex-row gap-6 pt-12 border-t border-slate-100">
-              <button 
-                type="button" 
-                onClick={() => setShowPreview(true)}
-                className="flex-1 py-5 border-2 border-slate-900 text-slate-900 rounded-[1.5rem] font-black text-xs uppercase  hover:bg-slate-900 hover:text-white transition-all duration-300"
-              >
-                Preview Entry
-              </button>
-              <button 
-                type="submit" 
-                className="flex-1 py-5 bg-blue-600 text-white rounded-[1.5rem] font-black text-xs uppercase  shadow-[0_20px_40px_-10px_rgba(37,99,235,0.5)] hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2"
-              >
-                Submit Request <CheckCircle size={16} />
-              </button>
-            </div>
+                {/* Section 4: Procurement Requirements */}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8 pt-10 border-t border-slate-100">
+                  <div className="md:col-span-2 flex items-center gap-4">
+                    <div className="w-12 h-12 bg-blue-600 rounded-2xl flex items-center justify-center text-white shadow-xl shadow-blue-200">
+                      <ShoppingBag size={24} />
+                    </div>
+                    <h3 className="font-black text-slate-900 uppercase  text-xl">Procurement Details</h3>
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className={labelStyle}>Textile Items to Buy (Roll-down mode)</label>
+                    <select name="textileItemsToBuy" required className={inputStyle}>
+                      <option value="">Select Item Category</option>
+                      {textileItems.map(item => <option key={item} value={item}>{item}</option>)}
+                    </select>
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className={labelStyle}>Description of the items to buy</label>
+                    <textarea name="itemDescription" className={`${inputStyle} h-28 resize-none`} placeholder="Specify Material, Grade, Loom Type, or Spare Specs..."></textarea>
+                  </div>
+                  <div>
+                    <label className={labelStyle}>Required Quantity</label>
+                    <input type="text" name="requiredQuantity" required className={inputStyle} />
+                  </div>
+                  <div>
+                    <label className={labelStyle}>Tentative Rate for Buying</label>
+                    <input type="text" name="tentativeRate" className={inputStyle} />
+                  </div>
+                  <div className="md:col-span-2">
+                    <label className={labelStyle}>Tentative Budget for Buying</label>
+                    <input type="text" name="tentativeBudget" className={inputStyle} />
+                  </div>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex flex-col md:flex-row gap-6 pt-12 border-t border-slate-100">
+                  <button 
+                    type="button" 
+                    onClick={() => setShowPreview(true)}
+                    className="flex-1 py-5 border-2 border-slate-900 text-slate-900 rounded-[1.5rem] font-black text-xs uppercase  hover:bg-slate-900 hover:text-white transition-all duration-300"
+                  >
+                    Preview Entry
+                  </button>
+                  <button 
+                    type="submit" 
+                    disabled={submitting}
+                    className="flex-1 py-5 bg-blue-600 text-white rounded-[1.5rem] font-black text-xs uppercase  shadow-[0_20px_40px_-10px_rgba(37,99,235,0.5)] hover:bg-blue-700 transition-all duration-300 flex items-center justify-center gap-2"
+                  >
+                    {submitting ? <Loader2 className="animate-spin" size={16} /> : <CheckCircle size={16} />}
+                    Submit Request
+                  </button>
+                </div>
+              </motion.div>
+            )}
+            </AnimatePresence>
             
-          
           </form>
         </div>
       </div>
@@ -220,7 +343,7 @@ const BuyerPlatform = () => {
               <p className="text-sm text-slate-600 font-medium mb-10 leading-relaxed">
                 Confirm your procurement details and business certifications. After submission, our trade desk will authorize your membership within 24 business hours.
               </p>
-              <button onClick={() => setShowPreview(false)} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl uppercase  text-xs shadow-xl shadow-blue-200">
+              <button type="button" onClick={() => setShowPreview(false)} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl uppercase  text-xs shadow-xl shadow-blue-200">
                 Back to Edit
               </button>
             </motion.div>

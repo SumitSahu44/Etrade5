@@ -1,10 +1,59 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Globe, Phone, Building2, MapPin, Hash, Mail, User } from 'lucide-react';
+import { Send, Globe, Phone, Building2, MapPin, Hash, Mail, User, CheckCircle } from 'lucide-react';
 
 const TradeEnquiry = () => {
+  const [formData, setFormData] = useState({
+    traderName: '',
+    businessName: '',
+    businessAddress: '',
+    gstNo: '',
+    mobileNo: '',
+    email: '',
+    enquiryType: ''
+  });
+  const [loading, setLoading] = useState(false);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [errorMsg, setErrorMsg] = useState('');
+
   const inputClass = "w-full p-4 bg-white/70 backdrop-blur-md border border-white/30 rounded-2xl outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100 transition-all text-sm font-semibold placeholder:text-slate-400";
   const labelClass = "block text-[10px] font-black text-blue-900 uppercase tracking-[0.1em] mb-2 ml-1";
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    setErrorMsg('');
+
+    const submitData = new FormData();
+    submitData.append("siteId", "ParekhETradeMarket02");
+    Object.keys(formData).forEach(key => {
+      submitData.append(key, formData[key]);
+    });
+
+    try {
+      const response = await fetch("http://localhost:5000/api/trade-enquiry", {
+        method: "POST",
+        body: submitData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setIsSubmitted(true);
+      } else {
+        setErrorMsg(result.message || 'Failed to send enquiry. Please try again.');
+      }
+    } catch (error) {
+      console.error("Submission Error:", error);
+      setErrorMsg('Server error. Please try again later.');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="py-24 min-h-screen relative overflow-hidden flex items-center justify-center">
@@ -42,89 +91,112 @@ const TradeEnquiry = () => {
             </p>
           </div>
 
-          <form className="space-y-6">
-            {/* Row 1: Name and Business Name */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className={labelClass}>Name of the Trader</label>
-                <div className="relative">
-                  <input type="text" className={inputClass} placeholder="Full Name" />
-                  <User className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-200" size={18} />
-                </div>
-              </div>
-              <div>
-                <label className={labelClass}>Business Name</label>
-                <div className="relative">
-                  <input type="text" className={inputClass} placeholder="Company Name" />
-                  <Building2 className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-200" size={18} />
-                </div>
-              </div>
-            </div>
-
-            {/* Row 2: Address */}
-            <div>
-              <label className={labelClass}>Business Address with Pin Code</label>
-              <div className="relative">
-                <input type="text" className={inputClass} placeholder="Street, City, State - Pin Code" />
-                <MapPin className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-200" size={18} />
-              </div>
-            </div>
-
-            {/* Row 3: GST and Mobile */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className={labelClass}>GST No.</label>
-                <div className="relative">
-                  <input type="text" className={inputClass} placeholder="22AAAAA0000A1Z5" />
-                  <Hash className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-200" size={18} />
-                </div>
-              </div>
-              <div>
-                <label className={labelClass}>Mobile No.</label>
-                <div className="relative">
-                  <input type="tel" className={inputClass} placeholder="+91 00000-00000" />
-                  <Phone className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-200" size={18} />
-                </div>
-              </div>
-            </div>
-
-            {/* Row 4: Email and Dropdown */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div>
-                <label className={labelClass}>Email Id</label>
-                <div className="relative">
-                  <input type="email" className={inputClass} placeholder="business@example.com" />
-                  <Mail className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-200" size={18} />
-                </div>
-              </div>
-              <div>
-                <label className={labelClass}>Trade Options</label>
-                <select className={inputClass}>
-                  <option value="">Select Enquiry Type</option>
-                  <option value="sell_textile">For Textile Product Sell</option>
-                  <option value="buy_textile">For Textile Product Buy</option>
-                  <option value="sell_machinery">For Textile Machinery & Spare Sell</option>
-                  <option value="buy_machinery">For Textile Machinery Buy</option>
-                  <option value="others">Others</option>
-                </select>
-              </div>
-            </div>
-
-            <motion.button 
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-              className="w-full py-6 bg-blue-600 text-white rounded-[2rem] font-black text-xs uppercase tracking-[0.3em] shadow-2xl shadow-blue-200 hover:bg-blue-700 transition-all flex items-center justify-center gap-3 mt-4"
+          {isSubmitted ? (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }} 
+              animate={{ opacity: 1, scale: 1 }} 
+              className="flex flex-col items-center justify-center text-center py-12"
             >
-              Submit Enquiry <Send size={18} />
-            </motion.button>
-
-            <div className="text-center pt-4">
-              <p className="text-[9px] font-black text-slate-600 uppercase ">
-                Official Submission Portal • Textile Trade Market
+              <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-6">
+                <CheckCircle size={40} className="text-blue-600" />
+              </div>
+              <h3 className="text-3xl font-black uppercase tracking-tighter text-slate-900 mb-4">Enquiry Submitted</h3>
+              <p className="text-slate-500 max-w-md mx-auto text-sm leading-relaxed font-medium">
+                Thank you! Your trade inquiry has been submitted successfully to Parekh Trade Network.
               </p>
-            </div>
-          </form>
+            </motion.div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-6">
+              {errorMsg && (
+                <div className="p-4 bg-red-50 text-red-600 text-xs font-bold uppercase tracking-widest border-l-4 border-red-500 mb-4">
+                  {errorMsg}
+                </div>
+              )}
+              {/* Row 1: Name and Business Name */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className={labelClass}>Name of the Trader *</label>
+                  <div className="relative">
+                    <input type="text" name="traderName" required value={formData.traderName} onChange={handleChange} className={inputClass} placeholder="Full Name" />
+                    <User className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-200" size={18} />
+                  </div>
+                </div>
+                <div>
+                  <label className={labelClass}>Business Name *</label>
+                  <div className="relative">
+                    <input type="text" name="businessName" required value={formData.businessName} onChange={handleChange} className={inputClass} placeholder="Company Name" />
+                    <Building2 className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-200" size={18} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 2: Address */}
+              <div>
+                <label className={labelClass}>Business Address with Pin Code *</label>
+                <div className="relative">
+                  <input type="text" name="businessAddress" required value={formData.businessAddress} onChange={handleChange} className={inputClass} placeholder="Street, City, State - Pin Code" />
+                  <MapPin className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-200" size={18} />
+                </div>
+              </div>
+
+              {/* Row 3: GST and Mobile */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className={labelClass}>GST No.</label>
+                  <div className="relative">
+                    <input type="text" name="gstNo" value={formData.gstNo} onChange={handleChange} className={inputClass} placeholder="22AAAAA0000A1Z5" />
+                    <Hash className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-200" size={18} />
+                  </div>
+                </div>
+                <div>
+                  <label className={labelClass}>Mobile No. *</label>
+                  <div className="relative">
+                    <input type="tel" name="mobileNo" required value={formData.mobileNo} onChange={handleChange} className={inputClass} placeholder="+91 00000-00000" />
+                    <Phone className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-200" size={18} />
+                  </div>
+                </div>
+              </div>
+
+              {/* Row 4: Email and Dropdown */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label className={labelClass}>Email Id *</label>
+                  <div className="relative">
+                    <input type="email" name="email" required value={formData.email} onChange={handleChange} className={inputClass} placeholder="business@example.com" />
+                    <Mail className="absolute right-4 top-1/2 -translate-y-1/2 text-blue-200" size={18} />
+                  </div>
+                </div>
+                <div>
+                  <label className={labelClass}>Trade Options *</label>
+                  <select name="enquiryType" required value={formData.enquiryType} onChange={handleChange} className={inputClass}>
+                    <option value="">Select Enquiry Type</option>
+                    <option value="sell_textile">For Textile Product Sell</option>
+                    <option value="buy_textile">For Textile Product Buy</option>
+                    <option value="sell_machinery">For Textile Machinery & Spare Sell</option>
+                    <option value="buy_machinery">For Textile Machinery Buy</option>
+                    <option value="others">Others</option>
+                  </select>
+                </div>
+              </div>
+
+              <motion.button 
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                type="submit"
+                disabled={loading}
+                className="w-full py-6 bg-blue-600 text-white rounded-[2rem] font-black text-xs uppercase tracking-[0.3em] shadow-2xl shadow-blue-200 hover:bg-blue-700 transition-all flex items-center justify-center gap-3 mt-4 disabled:opacity-70"
+              >
+                {loading ? "Submitting..." : "Submit Enquiry"} {!loading && <Send size={18} />}
+              </motion.button>
+
+              <div className="text-center pt-4">
+                <p className="text-[9px] font-black text-slate-600 uppercase ">
+                  Official Submission Portal • Textile Trade Market
+                </p>
+                <a href="mailto:trade-enquiry@parekhtrade.com" className="text-blue-600 font-black text-xs mt-2 inline-block">trade-enquiry@parekhtrade.com</a>
+              </div>
+            </form>
+          )}
         </div>
       </motion.div>
     </div>

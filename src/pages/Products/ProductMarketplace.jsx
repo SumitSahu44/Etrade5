@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Filter, ArrowUpRight, Box, Zap, ShieldCheck, Info } from 'lucide-react';
+import { productApi, categoryApi } from '../../utils/api';
 
 const ProductMarketplace = () => {
   const [activeCategory, setActiveCategory] = useState('All');
+  const [dynamicProducts, setDynamicProducts] = useState([]);
+  const [dynamicCategories, setDynamicCategories] = useState(['All']);
+  const [loading, setLoading] = useState(true);
 
   const categories = ['All', 'Raw Materials', 'Finished Fabrics', 'Machinery', 'Spares'];
 
-  const products = [
+  const dummyProducts = [
     { 
       id: 1, 
       category: 'Raw Materials', 
@@ -42,9 +46,48 @@ const ProductMarketplace = () => {
     },
   ];
 
+  useEffect(() => {
+    const fetchMarketplaceData = async () => {
+      try {
+        setLoading(true);
+        const siteId = 'ParekhETradeMarket02';
+        
+        // Fetch Categories and Products in Parallel
+        const [prodRes, catRes] = await Promise.all([
+          productApi.getProducts(siteId),
+          categoryApi.getCategories(siteId)
+        ]);
+
+        if (catRes.data.success && catRes.data.data.length > 0) {
+          setDynamicCategories(['All', ...catRes.data.data.map(c => c.name)]);
+        }
+
+        if (prodRes.data.success && prodRes.data.data.length > 0) {
+          const mapped = prodRes.data.data.map(p => ({
+            id: p._id,
+            category: p.category,
+            name: p.title,
+            spec: `Category: ${p.category}`,
+            img: `http://localhost:5000/${p.image}`,
+            price: "Inquiry Only"
+          }));
+          setDynamicProducts(mapped);
+        }
+      } catch (error) {
+        console.error("Failed to fetch marketplace data:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchMarketplaceData();
+  }, []);
+
+  const productsToDisplay = dynamicProducts.length > 0 ? dynamicProducts : dummyProducts;
+  const categoriesToDisplay = dynamicProducts.length > 0 ? dynamicCategories : ['All', 'Raw Materials', 'Finished Fabrics', 'Machinery', 'Spares'];
+
   const filteredProducts = activeCategory === 'All' 
-    ? products 
-    : products.filter(p => p.category === activeCategory);
+    ? productsToDisplay 
+    : productsToDisplay.filter(p => p.category === activeCategory);
 
   return (
     <div className="bg-white min-h-screen font-sans selection:bg-blue-100 selection:text-blue-900">
@@ -84,10 +127,7 @@ const ProductMarketplace = () => {
       {/* --- SMART FILTERS --- */}
       <section className="sticky top-20 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-wrap items-center gap-3">
-          {/* <div className="flex items-center gap-2 text-slate-500 font-bold uppercase text-[10px] tracking-widest mr-4">
-            <Filter size={14} /> Browse by
-          </div> */}
-          {categories.map(cat => (
+          {categoriesToDisplay.map(cat => (
             <button 
               key={cat}
               onClick={() => setActiveCategory(cat)}
