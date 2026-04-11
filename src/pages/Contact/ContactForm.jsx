@@ -25,16 +25,10 @@ const ContactSection = () => {
             <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-transparent to-slate-950/90"></div>
 
             <div className="relative z-10">
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                className="inline-block px-4 py-1.5 bg-blue-600 rounded-full text-[10px] font-black uppercase tracking-widest mb-8"
-              >
-                Contact Us
-              </motion.div>
+
 
               <h2 className="text-4xl lg:text-5xl font-bold mb-6 tracking-tighter uppercase leading-[1.1]">
-                Get In <br /> <span className="text-blue-500">Touch</span>
+                Contact Us
               </h2>
 
               <div className="space-y-8 mt-10">
@@ -86,11 +80,6 @@ const ContactSection = () => {
               </div>
             </div>
 
-            <div className="relative z-10 pt-10 border-t border-white/10 mt-12">
-              <p className="text-[10px] font-black text-slate-500 tracking-[0.3em]">
-                PAREKH e-TRADE MARKET • 2026
-              </p>
-            </div>
           </div>
 
           {/* RIGHT SIDE (MAP) */}

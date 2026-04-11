@@ -12,37 +12,37 @@ const ProductMarketplace = () => {
   const categories = ['All', 'Raw Materials', 'Finished Fabrics', 'Machinery', 'Spares'];
 
   const dummyProducts = [
-    { 
-      id: 1, 
-      category: 'Raw Materials', 
-      name: "Organic Long-Staple Cotton", 
-      spec: "Grade: AAA | Origin: India", 
+    {
+      id: 1,
+      category: 'Raw Materials',
+      name: "Organic Long-Staple Cotton",
+      spec: "Grade: AAA | Origin: India",
       img: "https://img.freepik.com/premium-photo/textile-designer-isolated-flat-color-background_980928-38343.jpg?ga=GA1.1.124606815.1772781809&semt=ais_rp_progressive&w=740&q=80",
-      price: "Market Rate" 
+      price: "Market Rate"
     },
-    { 
-      id: 2, 
-      category: 'Machinery', 
-      name: "Air-Jet Weaving Loom", 
-      spec: "Model: PX-2026 | High Speed", 
+    {
+      id: 2,
+      category: 'Machinery',
+      name: "Air-Jet Weaving Loom",
+      spec: "Model: PX-2026 | High Speed",
       img: "https://img.freepik.com/premium-photo/high-angle-closeup-shot-colorful-textiles-with-beautiful-asian-patterns_926199-3639020.jpg?w=1060",
-      price: "Inquiry Only" 
+      price: "Inquiry Only"
     },
-    { 
-      id: 3, 
-      category: 'Finished Fabrics', 
-      name: "Premium Silk Jacquard", 
-      spec: "100% Pure Silk | Export Quality", 
+    {
+      id: 3,
+      category: 'Finished Fabrics',
+      name: "Premium Silk Jacquard",
+      spec: "100% Pure Silk | Export Quality",
       img: "https://img.freepik.com/premium-photo/thai-silk-pattern-design_147059-200.jpg?w=1480",
-      price: "₹1,200/mtr" 
+      price: "₹1,200/mtr"
     },
-    { 
-      id: 4, 
-      category: 'Spares', 
-      name: "Precision Spindle Set", 
-      spec: "Stainless Steel | Anti-Corrosive", 
+    {
+      id: 4,
+      category: 'Spares',
+      name: "Precision Spindle Set",
+      spec: "Stainless Steel | Anti-Corrosive",
       img: "https://img.freepik.com/free-photo/fabric-background-with-floral-pattern_1385-1975.jpg?t=st=1773901894~exp=1773905494~hmac=6086c537b0ddf17663a89b1e6cd11e1c90bf283e9e9305c9fd70f6f77ac8e0a2&w=1060",
-      price: "₹8,500/unit" 
+      price: "₹8,500/unit"
     },
   ];
 
@@ -51,7 +51,7 @@ const ProductMarketplace = () => {
       try {
         setLoading(true);
         const siteId = 'ParekhETradeMarket02';
-        
+
         // Fetch Categories and Products in Parallel
         const [prodRes, catRes] = await Promise.all([
           productApi.getProducts(siteId),
@@ -85,18 +85,18 @@ const ProductMarketplace = () => {
   const productsToDisplay = dynamicProducts.length > 0 ? dynamicProducts : dummyProducts;
   const categoriesToDisplay = dynamicProducts.length > 0 ? dynamicCategories : ['All', 'Raw Materials', 'Finished Fabrics', 'Machinery', 'Spares'];
 
-  const filteredProducts = activeCategory === 'All' 
-    ? productsToDisplay 
+  const filteredProducts = activeCategory === 'All'
+    ? productsToDisplay
     : productsToDisplay.filter(p => p.category === activeCategory);
 
   return (
     <div className="bg-white min-h-screen font-sans selection:bg-blue-100 selection:text-blue-900">
-      
+
       {/* --- ELITE HEADER --- */}
       <section className="bg-[#0f172a] py-24 px-6 relative overflow-hidden">
         <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')]"></div>
         <div className="max-w-7xl mx-auto relative z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             className="flex flex-col lg:flex-row justify-between items-start lg:items-end gap-10"
@@ -104,22 +104,13 @@ const ProductMarketplace = () => {
             <div>
               <span className="text-blue-500 font-bold tracking-[0.4em] uppercase text-xs mb-4 block">B2B Inventory</span>
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight">
-                Textile <span className="text-blue-500">Solutions</span>
+                Product & Services
               </h1>
               <p className="text-slate-400 max-w-lg text-lg font-normal leading-relaxed">
-                Aggregating the world's most reliable textile resources under one digital trade window.
-              </p>
+                Bulk Purchase and Sell of the Textile Product, Finished and Raw.
+                Purchase and Sell of the Textile Machineries & Spares. </p>
             </div>
 
-            {/* Premium Search */}
-            <div className="relative w-full max-w-md group">
-              <input 
-                type="text" 
-                placeholder="Find materials, machines or spares..." 
-                className="w-full bg-white/5 border border-white/10 text-white p-5 rounded-2xl outline-none focus:border-blue-500 focus:bg-white/10 transition-all pl-14 placeholder:text-slate-500 font-medium"
-              />
-              <Search className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-500 group-focus-within:text-blue-500 transition-colors" size={22} />
-            </div>
           </motion.div>
         </div>
       </section>
@@ -128,14 +119,13 @@ const ProductMarketplace = () => {
       <section className="sticky top-20 z-40 bg-white/80 backdrop-blur-md border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-6 py-6 flex flex-wrap items-center gap-3">
           {categoriesToDisplay.map(cat => (
-            <button 
+            <button
               key={cat}
               onClick={() => setActiveCategory(cat)}
-              className={`px-6 py-2 rounded-xl text-xs font-bold transition-all duration-300 ${
-                activeCategory === cat 
-                ? 'bg-blue-600 text-white shadow-lg shadow-blue-200' 
+              className={`px-6 py-2 rounded-xl text-xs font-bold transition-all duration-300 ${activeCategory === cat
+                ? 'bg-blue-600 text-white shadow-lg shadow-blue-200'
                 : 'bg-white text-slate-600 border border-slate-200 hover:border-blue-400 hover:text-blue-600'
-              }`}
+                }`}
             >
               {cat}
             </button>
@@ -148,7 +138,7 @@ const ProductMarketplace = () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12">
           <AnimatePresence mode="popLayout">
             {filteredProducts.map((product) => (
-              <motion.div 
+              <motion.div
                 layout
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -158,24 +148,24 @@ const ProductMarketplace = () => {
               >
                 {/* Visual Card */}
                 <div className="relative aspect-[4/5] rounded-[2.5rem] overflow-hidden mb-6 shadow-xl shadow-slate-200/50 border border-slate-100 bg-slate-50">
-                  <img 
-                    src={product.img} 
-                    alt={product.name} 
-                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" 
+                  <img
+                    src={product.img}
+                    alt={product.name}
+                    className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
                   />
                   <div className="absolute top-5 left-5 bg-white shadow-xl px-4 py-1.5 rounded-full text-[9px] font-black uppercase tracking-widest text-blue-600 border border-blue-50">
                     {product.category}
                   </div>
-                  
+
                   {/* Action Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute bottom-6 right-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
-                     <div className="bg-white p-4 rounded-2xl text-blue-600 shadow-2xl hover:bg-blue-600 hover:text-white transition-colors">
-                        <ArrowUpRight size={24} />
-                     </div>
+                    <div className="bg-white p-4 rounded-2xl text-blue-600 shadow-2xl hover:bg-blue-600 hover:text-white transition-colors">
+                      <ArrowUpRight size={24} />
+                    </div>
                   </div>
                 </div>
-                
+
                 {/* Information */}
                 <div className="px-1">
                   <h3 className="text-xl font-bold text-slate-800 mb-2 leading-tight group-hover:text-blue-600 transition-colors">
@@ -184,7 +174,7 @@ const ProductMarketplace = () => {
                   <p className="text-[11px] font-bold text-slate-400 mb-5 uppercase tracking-wider flex items-center gap-1.5">
                     <Info size={12} className="text-blue-400" /> {product.spec}
                   </p>
-                  
+
                   <div className="flex justify-between items-center pt-4 border-t border-slate-100">
                     <span className="text-lg font-bold text-slate-700 tracking-tight">{product.price}</span>
                     <button className="text-[11px] font-black text-blue-600 uppercase tracking-widest group-hover:translate-x-1 transition-transform">

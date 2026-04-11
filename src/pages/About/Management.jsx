@@ -1,59 +1,36 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-// import { Linkedin, Mail } from 'lucide-react';
 
 const Management = () => {
-  const leaders = [
-    { name: "Executive Director", role: "MD", desc: "25+ years of trade expertise.", img: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80" },
-    { name: "Operational Lead", role: "COO", desc: "Expert in Global Supply Chain.", img: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80" },
-    { name: "Technical Chief", role: "CTO", desc: "Digital e-Trade specialist.", img: "https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80" }
-  ];
-
   return (
-    <section id="management" className="py-24 bg-blue-50/50 relative overflow-hidden">
-      
-      {/* Dark Texture Overlay for the Header */}
-      <div className="absolute top-0 left-0 w-full h-[45vh] bg-slate-950 overflow-hidden">
-        <img 
-          src="https://plus.unsplash.com/premium_photo-1664299852788-5a24db0d7e05?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8dGV4dGlsZXxlbnwwfHwwfHx8MA%3D%3D" 
-          className="w-full h-full object-cover opacity-20"
-          alt="Textile Texture"
-        />
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-transparent to-transparent"></div>
-      </div>
-
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
-        {/* White Text Header */}
-        <div className="text-center mb-20 h-[25vh] flex flex-col justify-center">
-          <h2 className="text-sm font-black text-blue-400 uppercase tracking-[0.3em] mb-4">Leadership</h2>
-          <h3 className="text-4xl md:text-5xl font-bold text-white tracking-tighter uppercase">Our Management Team</h3>
+    <section className="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 flex items-center justify-center px-6 py-10">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="max-w-6xl w-full bg-white shadow-2xl rounded-[2rem] overflow-hidden grid md:grid-cols-2 border border-slate-100"
+      >
+        {/* Image Section */}
+        <div className="h-[300px] md:h-auto">
+          <img
+            src="https://images.unsplash.com/photo-1521791136064-7986c2920216?auto=format&fit=crop&q=80"
+            alt="Management Team"
+            className="w-full h-full object-cover"
+          />
         </div>
 
-        {/* Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {leaders.map((person, i) => (
-            <motion.div 
-              key={i} 
-              whileHover={{ y: -10 }}
-              className="bg-white rounded-[3rem] overflow-hidden shadow-2xl shadow-blue-900/5 border border-white group"
-            >
-              <div className="h-80 overflow-hidden relative">
-                <img src={person.img} className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" alt={person.name} />
-                <div className="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
-              <div className="p-10 text-center">
-                <h4 className="text-xl font-bold text-slate-800 mb-1">{person.name}</h4>
-                <p className="text-blue-600 text-xs font-black uppercase tracking-widest mb-4">{person.role}</p>
-                <p className="text-sm text-slate-500 leading-relaxed mb-6 font-medium">{person.desc}</p>
-                <div className="flex justify-center gap-4 border-t border-slate-100 pt-6">
-                  {/* <button className="p-3 bg-slate-100 rounded-full text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-all"><Linkedin size={18}/></button>
-                  <button className="p-3 bg-slate-100 rounded-full text-slate-400 hover:text-blue-600 hover:bg-blue-50 transition-all"><Mail size={18}/></button> */}
-                </div>
-              </div>
-            </motion.div>
-          ))}
+        {/* Content Section */}
+        <div className="p-8 md:p-12 flex flex-col justify-center">
+          <h1 className="text-3xl md:text-4xl font-bold text-slate-900 mb-6 leading-tight">
+            Our <span className="text-blue-600">Management</span>
+          </h1>
+
+          <p className="text-slate-600 text-lg leading-relaxed font-medium">
+            Parekh e-Trade Market (Textile) is administered and governed by the highly skilled,
+            experienced and qualified Management.
+          </p>
         </div>
-      </div>
+      </motion.div>
     </section>
   );
 };
