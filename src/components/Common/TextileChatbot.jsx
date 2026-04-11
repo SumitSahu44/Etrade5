@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageCircle, X, Send, User, Bot, ShoppingBag, Truck, Info } from 'lucide-react';
+import { MessageCircle, X, Send, User, Bot, ShoppingBag, Truck, Info, HelpCircle } from 'lucide-react';
 
 const TextileChatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -8,10 +9,26 @@ const TextileChatbot = () => {
     { id: 1, text: "Welcome to PAREKH e-TRADE MARKET! How can I assist your textile business today?", sender: 'bot' }
   ]);
   const [inputValue, setInputValue] = useState("");
+  const navigate = useNavigate();
+
+  const handleAction = (label, path) => {
+    // Add user selection as message
+    setMessages(prev => [...prev, { id: Date.now(), text: label, sender: 'user' }]);
+
+    // Smooth navigation
+    setTimeout(() => {
+      navigate(path);
+      setMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        text: `Navigating you to ${label}. How else can I help?`,
+        sender: 'bot'
+      }]);
+    }, 400);
+  };
 
   const handleSend = () => {
     if (!inputValue.trim()) return;
-    
+
     // Add user message
     const newMsg = { id: Date.now(), text: inputValue, sender: 'user' };
     setMessages([...messages, newMsg]);
@@ -19,21 +36,21 @@ const TextileChatbot = () => {
 
     // Simulate Bot Response
     setTimeout(() => {
-      setMessages(prev => [...prev, { 
-        id: Date.now() + 1, 
-        text: "Thank you for reaching out. Our trade desk team will analyze your query regarding textile sourcing/selling and get back to you shortly.", 
-        sender: 'bot' 
+      setMessages(prev => [...prev, {
+        id: Date.now() + 1,
+        text: "Thank you for reaching out. Our trade desk team will analyze your query regarding textile sourcing/selling and get back to you shortly.",
+        sender: 'bot'
       }]);
     }, 1000);
   };
 
   return (
     <div className="fixed bottom-8 right-8 flex flex-col items-end gap-4 z-[100]">
-      
+
       {/* --- CHAT WINDOW --- */}
       <AnimatePresence>
         {isOpen && (
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
@@ -59,11 +76,10 @@ const TextileChatbot = () => {
             <div className="flex-1 overflow-y-auto p-6 space-y-4 bg-slate-50">
               {messages.map((msg) => (
                 <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-                  <div className={`max-w-[80%] p-4 rounded-2xl text-sm font-medium shadow-sm ${
-                    msg.sender === 'user' 
-                    ? 'bg-blue-600 text-white rounded-tr-none' 
+                  <div className={`max-w-[80%] p-4 rounded-2xl text-sm font-medium shadow-sm ${msg.sender === 'user'
+                    ? 'bg-blue-600 text-white rounded-tr-none'
                     : 'bg-white text-slate-800 rounded-tl-none border border-slate-100'
-                  }`}>
+                    }`}>
                     {msg.text}
                   </div>
                 </div>
@@ -73,10 +89,15 @@ const TextileChatbot = () => {
             {/* Quick Actions */}
             <div className="px-4 py-2 bg-white border-t border-slate-50 flex gap-2 overflow-x-auto no-scrollbar">
               {[
-                { icon: <ShoppingBag size={12}/>, label: "Buy Products" },
-                { icon: <Truck size={12}/>, label: "Check Auctions" }
+                { icon: <HelpCircle size={12} />, label: "Trade Enquiry", path: "/enquiry" },
+                { icon: <ShoppingBag size={12} />, label: "Buyer Platform", path: "/buyer" },
+                { icon: <Truck size={12} />, label: "Seller Platform", path: "/seller" }
               ].map((item, i) => (
-                <button key={i} className="whitespace-nowrap bg-slate-100 hover:bg-blue-50 text-slate-600 hover:text-blue-600 px-3 py-1.5 rounded-full text-[10px] font-black uppercase transition-all flex items-center gap-1">
+                <button
+                  key={i}
+                  onClick={() => handleAction(item.label, item.path)}
+                  className="whitespace-nowrap bg-slate-100 hover:bg-blue-600 hover:text-white px-3 py-2 rounded-full text-[10px] font-black uppercase transition-all flex items-center gap-1.5 border border-slate-200"
+                >
                   {item.icon} {item.label}
                 </button>
               ))}
@@ -84,15 +105,15 @@ const TextileChatbot = () => {
 
             {/* Input Area */}
             <div className="p-4 bg-white border-t border-slate-100 flex gap-2">
-              <input 
-                type="text" 
+              <input
+                type="text"
                 value={inputValue}
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                 placeholder="Type your trade enquiry..."
                 className="flex-1 bg-slate-50 border-none outline-none px-4 py-3 rounded-xl text-sm font-medium"
               />
-              <button 
+              <button
                 onClick={handleSend}
                 className="bg-blue-600 text-white p-3 rounded-xl hover:bg-blue-700 transition-colors shadow-lg shadow-blue-100"
               >
@@ -106,7 +127,7 @@ const TextileChatbot = () => {
       {/* --- BUTTONS STACK --- */}
       <div className="flex flex-col gap-3">
         {/* Chatbot Toggle Button */}
-        <motion.button 
+        <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => setIsOpen(!isOpen)}
@@ -116,11 +137,11 @@ const TextileChatbot = () => {
         </motion.button>
 
         {/* WhatsApp Link (Already existing) */}
-        <motion.a 
+        <motion.a
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          href="https://wa.me/yournumber" 
-          target="_blank" 
+          href="https://wa.me/6353778329"
+          target="_blank"
           rel="noreferrer"
           className="bg-green-500 p-4 rounded-full shadow-2xl flex items-center justify-center z-50 border-4 border-white"
         >

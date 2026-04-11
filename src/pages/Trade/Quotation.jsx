@@ -56,7 +56,7 @@ const Quotation = () => {
 
   return (
     <div className="py-20 bg-slate-50 min-h-screen relative overflow-hidden font-sans">
-      
+
       {/* --- ELITE BACKGROUND TEXTURE --- */}
       <div className="absolute top-0 left-0 w-full h-80 bg-slate-950">
         <div className="absolute inset-0 opacity-20 bg-[url('https://img.freepik.com/free-photo/color-tone-texture-fabric-sample_1373-421.jpg?w=1060')]"></div>
@@ -64,7 +64,7 @@ const Quotation = () => {
       </div>
 
       <div className="max-w-5xl mx-auto px-6 relative z-10">
-        
+
         {/* --- HEADER ACTIONS --- */}
         <div className="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
           <div className="text-center md:text-left">
@@ -73,18 +73,11 @@ const Quotation = () => {
               <CheckCircle2 size={14} /> Official Trade Submission Form
             </p>
           </div>
-          <div className="flex gap-3">
-            <button className="flex items-center gap-2 px-5 py-2.5 bg-white border border-slate-200 rounded-xl text-xs font-bold text-slate-600 hover:bg-slate-50 transition-all shadow-sm">
-              <Printer size={16} /> Print Draft
-            </button>
-            <button className="flex items-center gap-2 px-5 py-2.5 bg-blue-600 text-white rounded-xl text-xs font-bold hover:bg-blue-700 transition-all shadow-lg shadow-blue-200">
-              <Download size={16} /> Save Progress
-            </button>
-          </div>
+
         </div>
 
         {/* --- MAIN FORM CARD --- */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           className="bg-white rounded-[3rem] shadow-2xl shadow-slate-900/5 border border-white overflow-hidden"
@@ -99,7 +92,7 @@ const Quotation = () => {
             </div>
             <div className="text-right flex flex-col items-end">
               <div className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">
-              Form Mode
+                Form Mode
               </div>
             </div>
           </div>
@@ -199,11 +192,11 @@ const Quotation = () => {
                 <div>
                   <label className={labelClass}>Particulars Details (Optional)</label>
                   <div className="relative">
-                    <textarea 
+                    <textarea
                       name="particulars"
                       value={formData.particulars}
                       onChange={handleChange}
-                      className={`${inputClass} h-40 resize-none pt-4`} 
+                      className={`${inputClass} h-40 resize-none pt-4`}
                       placeholder="List products here (e.g. Item Name, Qty, Price, Fabric Weight, etc.)"
                     ></textarea>
                     <ListTodo className="absolute right-4 bottom-4 text-slate-300" size={20} />
@@ -213,7 +206,7 @@ const Quotation = () => {
 
               {/* Submit Section */}
               <div className="flex flex-col items-center gap-6 pt-6">
-                <motion.button 
+                <motion.button
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                   type="submit"

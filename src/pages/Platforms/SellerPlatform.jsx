@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ShieldCheck, Factory, BarChart3, UploadCloud, Eye, CheckCircle, Info, LockKeyhole, Loader2 } from 'lucide-react';
+import PreviewModal from '../../components/Common/PreviewModal';
 
 const SellerPlatform = () => {
   const [showPreview, setShowPreview] = useState(false);
@@ -10,6 +11,27 @@ const SellerPlatform = () => {
   const [validating, setValidating] = useState(false);
   const [authId, setAuthId] = useState(null);
   const [submitting, setSubmitting] = useState(false);
+  const formRef = useRef(null);
+  const [formData, setFormData] = useState({
+    sellerName: '',
+    businessName: '',
+    businessAddress: '',
+    mobileNo: '',
+    emailId: '',
+    websiteUrl: '',
+    natureOfBusiness: '',
+    categoryOfBusiness: '',
+    chamberMembership: '',
+    textileItemsToSell: '',
+    itemDescription: '',
+    totalQuantity: '',
+    expectedRate: ''
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
 
   const businessNatures = ['Retailer', 'Wholesaler', 'Manufacturer'];
   const businessCategories = ['Proprietorship', 'Partnership', 'LLP', 'Private Limited', 'Ltd.', 'Other'];
@@ -51,35 +73,24 @@ const SellerPlatform = () => {
     }
 
     const form = e.target;
-    const formData = new FormData();
-    formData.append('authorizedPersonId', authId);
-    formData.append('sellerName', form.sellerName.value);
-    formData.append('businessName', form.businessName.value);
-    formData.append('businessAddress', form.businessAddress.value);
-    formData.append('mobileNo', form.mobileNo.value);
-    formData.append('emailId', form.emailId.value);
-    formData.append('websiteUrl', form.websiteUrl.value);
-    formData.append('natureOfBusiness', form.natureOfBusiness.value);
-    formData.append('categoryOfBusiness', form.categoryOfBusiness.value);
-    formData.append('chamberMembership', form.chamberMembership.value);
+    const submitData = new FormData();
+    submitData.append('authorizedPersonId', authId);
+    Object.keys(formData).forEach(key => submitData.append(key, formData[key]));
     
-    const files = form.kycDocuments.files;
+    const fileInput = form.querySelector('input[name="kycDocuments"]');
+    const files = fileInput ? fileInput.files : [];
     for (let i = 0; i < files.length; i++) {
-        formData.append('kycDocuments', files[i]);
+        submitData.append('kycDocuments', files[i]);
     }
 
-    formData.append('textileItemsToSell', form.textileItemsToSell.value);
-    formData.append('itemDescription', form.itemDescription.value);
-    formData.append('totalQuantity', form.totalQuantity.value);
-    formData.append('expectedRate', form.expectedRate.value);
-    formData.append('siteId', 'ParekhETradeMarket02');
+    submitData.append('siteId', 'ParekhETradeMarket02');
 
     setSubmitting(true);
     setShowPreview(false);
     try {
       const response = await fetch('http://localhost:5000/api/etrade/seller', {
         method: 'POST',
-        body: formData
+        body: submitData
       });
       const data = await response.json();
       if (data.success) {
@@ -95,6 +106,22 @@ const SellerPlatform = () => {
       setSubmitting(false);
     }
   };
+
+  const previewFields = [
+    { key: 'sellerName', label: 'Seller Name' },
+    { key: 'businessName', label: 'Business Name' },
+    { key: 'businessAddress', label: 'Business Address' },
+    { key: 'mobileNo', label: 'Mobile No.' },
+    { key: 'emailId', label: 'Email Id' },
+    { key: 'websiteUrl', label: 'Website URL' },
+    { key: 'natureOfBusiness', label: 'Nature of Business' },
+    { key: 'categoryOfBusiness', label: 'Category of Business' },
+    { key: 'chamberMembership', label: 'Chamber Membership' },
+    { key: 'textileItemsToSell', label: 'Items to Sell' },
+    { key: 'itemDescription', label: 'Item Description' },
+    { key: 'totalQuantity', label: 'Total Quantity' },
+    { key: 'expectedRate', label: 'Expected Rate' },
+  ];
 
   const inputStyle = "w-full p-4 bg-white/90 backdrop-blur-md border border-slate-200 rounded-2xl outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-100/50 transition-all text-sm font-medium shadow-sm";
   const labelStyle = "block text-[11px] font-black text-slate-600 uppercase mb-2 ml-1";
@@ -133,7 +160,7 @@ const SellerPlatform = () => {
       <div className="max-w-5xl mx-auto px-6 -mt-32 pb-20 relative z-20">
         <div className="bg-white/80 backdrop-blur-xl rounded-[3.5rem] shadow-[0_50px_100px_-20px_rgba(0,0,0,0.1)] border border-white overflow-hidden">
           
-          <form onSubmit={handleSubmit} className="p-8 md:p-16 space-y-16">
+          <form ref={formRef} onSubmit={handleSubmit} className="p-8 md:p-16 space-y-16">
             
             {/* Section 1: Official Authorization */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-end">
@@ -195,45 +222,45 @@ const SellerPlatform = () => {
                   </div>
                   <div>
                     <label className={labelStyle}>Name of the Seller</label>
-                    <input type="text" name="sellerName" required className={inputStyle} />
+                    <input type="text" name="sellerName" value={formData.sellerName} onChange={handleInputChange} required className={inputStyle} />
                   </div>
                   <div>
                     <label className={labelStyle}>Name of Business</label>
-                    <input type="text" name="businessName" required className={inputStyle} />
+                    <input type="text" name="businessName" value={formData.businessName} onChange={handleInputChange} required className={inputStyle} />
                   </div>
                   <div className="md:col-span-2">
                     <label className={labelStyle}>Address of Business</label>
-                    <textarea name="businessAddress" required className={`${inputStyle} h-28 resize-none`} placeholder="Registered Office Address"></textarea>
+                    <textarea name="businessAddress" value={formData.businessAddress} onChange={handleInputChange} required className={`${inputStyle} h-28 resize-none`} placeholder="Registered Office Address"></textarea>
                   </div>
                   <div>
                     <label className={labelStyle}>Mobile No.</label>
-                    <input type="tel" name="mobileNo" required className={inputStyle} />
+                    <input type="tel" name="mobileNo" value={formData.mobileNo} onChange={handleInputChange} required className={inputStyle} />
                   </div>
                   <div>
                     <label className={labelStyle}>Email Id</label>
-                    <input type="email" name="emailId" required className={inputStyle} />
+                    <input type="email" name="emailId" value={formData.emailId} onChange={handleInputChange} required className={inputStyle} />
                   </div>
                   <div>
                     <label className={labelStyle}>Website URL</label>
-                    <input type="url" name="websiteUrl" placeholder="https://" className={inputStyle} />
+                    <input type="url" name="websiteUrl" value={formData.websiteUrl} onChange={handleInputChange} placeholder="https://" className={inputStyle} />
                   </div>
                   <div>
                     <label className={labelStyle}>Nature of Business</label>
-                    <select name="natureOfBusiness" required className={inputStyle}>
+                    <select name="natureOfBusiness" value={formData.natureOfBusiness} onChange={handleInputChange} required className={inputStyle}>
                       <option value="">Select Nature</option>
-                      {businessNatures.map(n => <option key={n}>{n}</option>)}
+                      {businessNatures.map(n => <option key={n} value={n}>{n}</option>)}
                     </select>
                   </div>
                   <div>
                     <label className={labelStyle}>Category of Business</label>
-                    <select name="categoryOfBusiness" required className={inputStyle}>
+                    <select name="categoryOfBusiness" value={formData.categoryOfBusiness} onChange={handleInputChange} required className={inputStyle}>
                       <option value="">Select Category</option>
-                      {businessCategories.map(c => <option key={c}>{c}</option>)}
+                      {businessCategories.map(c => <option key={c} value={c}>{c}</option>)}
                     </select>
                   </div>
                   <div className="md:col-span-2">
                     <label className={labelStyle}>Membership (Chamber of Textile)</label>
-                    <input type="text" name="chamberMembership" placeholder="If any" className={inputStyle} />
+                    <input type="text" name="chamberMembership" value={formData.chamberMembership} onChange={handleInputChange} placeholder="If any" className={inputStyle} />
                   </div>
                 </div>
 
@@ -274,22 +301,22 @@ const SellerPlatform = () => {
                   </div>
                   <div className="md:col-span-2">
                     <label className={labelStyle}>Textile Items to Sell</label>
-                    <select name="textileItemsToSell" required className={inputStyle}>
+                    <select name="textileItemsToSell" value={formData.textileItemsToSell} onChange={handleInputChange} required className={inputStyle}>
                       <option value="">Select Product Type</option>
                       {sellItems.map(item => <option key={item} value={item}>{item}</option>)}
                     </select>
                   </div>
                   <div className="md:col-span-2">
                     <label className={labelStyle}>Description of items to Sell</label>
-                    <textarea name="itemDescription" className={`${inputStyle} h-28 resize-none`} placeholder="Mention Material, Grade, Specs..."></textarea>
+                    <textarea name="itemDescription" value={formData.itemDescription} onChange={handleInputChange} className={`${inputStyle} h-28 resize-none`} placeholder="Mention Material, Grade, Specs..."></textarea>
                   </div>
                   <div>
                     <label className={labelStyle}>Total Qty for selling</label>
-                    <input type="text" name="totalQuantity" required placeholder="Units / Meters / Tons" className={inputStyle} />
+                    <input type="text" name="totalQuantity" value={formData.totalQuantity} onChange={handleInputChange} required placeholder="Units / Meters / Tons" className={inputStyle} />
                   </div>
                   <div>
                     <label className={labelStyle}>Expected Rate for selling</label>
-                    <input type="text" name="expectedRate" placeholder="Price per unit" className={inputStyle} />
+                    <input type="text" name="expectedRate" value={formData.expectedRate} onChange={handleInputChange} placeholder="Price per unit" className={inputStyle} />
                   </div>
                 </div>
 
@@ -321,22 +348,15 @@ const SellerPlatform = () => {
       </div>
 
       {/* --- PREVIEW MODAL --- */}
-      <AnimatePresence>
-        {showPreview && (
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="fixed inset-0 bg-slate-900/60 backdrop-blur-xl z-[300] flex items-center justify-center p-6">
-            <motion.div initial={{ scale: 0.9, y: 30 }} animate={{ scale: 1, y: 0 }} className="bg-white rounded-[3rem] w-full max-w-2xl p-12 relative border border-white">
-              <div className="absolute top-0 left-0 w-full h-3 bg-blue-600"></div>
-              <h3 className="text-3xl font-black text-slate-900 mb-6 uppercase ">Profile Review</h3>
-              <p className="text-sm text-slate-600 font-medium mb-10 leading-relaxed">
-                Confirm your business details and uploaded certifications. Once submitted, your profile will undergo a 24-hour verification cycle by PAREKH e-TRADE MARKET officials.
-              </p>
-              <button type="button" onClick={() => setShowPreview(false)} className="w-full py-5 bg-blue-600 text-white font-black rounded-2xl uppercase tracking-widest text-xs shadow-xl shadow-blue-200">
-                Back to Edit
-              </button>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <PreviewModal
+        isOpen={showPreview}
+        onClose={() => setShowPreview(false)}
+        data={formData}
+        fields={previewFields}
+        onConfirm={() => handleSubmit({ preventDefault: () => {}, target: formRef.current })}
+        loading={submitting}
+        title="Seller Profile Preview"
+      />
     </div>
   );
 };

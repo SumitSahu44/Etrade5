@@ -30,25 +30,15 @@ const MediaBlog = () => {
   return (
     <section className="py-20 bg-white">
       <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-12 gap-12">
-        
-        {/* Left Side: Circulars & Blogs */}
-        <div className="lg:col-span-4 space-y-8">
-          <h2 className="text-3xl font-bold text-slate-900 border-l-4 border-blue-600 pl-4">Latest Circulars</h2>
-          <div className="py-10 px-6 rounded-2xl bg-blue-50 border border-blue-100 text-center">
-            <p className="text-blue-900 font-black uppercase tracking-tighter text-lg">
-             ( At present, No Circular )
-            </p>
-          </div>
-          <button className="w-full py-3 bg-slate-100 text-slate-700 font-bold rounded-lg hover:bg-slate-200">View All Updates</button>
-        </div>
+
 
         {/* Right Side: Media Gallery */}
         <div className="lg:col-span-8">
           <h2 className="text-3xl font-bold text-slate-900 mb-8">Media Gallery</h2>
           {loading ? (
-             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-               {[1, 2, 3, 4].map(i => <div key={i} className="h-64 bg-slate-100 animate-pulse rounded-2xl"></div>)}
-             </div>
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {[1, 2, 3, 4].map(i => <div key={i} className="h-64 bg-slate-100 animate-pulse rounded-2xl"></div>)}
+            </div>
           ) : (
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
               {media.length > 0 ? (
@@ -60,16 +50,16 @@ const MediaBlog = () => {
               ) : (
                 <>
                   <div className="h-64 bg-gray-200 rounded-2xl overflow-hidden relative group">
-                      <img src={defaultImages[0]} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gallery" />
+                    <img src={defaultImages[0]} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gallery" />
                   </div>
                   <div className="h-64 bg-gray-200 rounded-2xl overflow-hidden relative group">
-                      <img src={defaultImages[1]} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gallery" />
+                    <img src={defaultImages[1]} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gallery" />
                   </div>
                   <div className="h-64 bg-gray-200 rounded-2xl md:row-span-2 md:h-full overflow-hidden relative group">
-                      <img src={defaultImages[2]} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gallery" />
+                    <img src={defaultImages[2]} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gallery" />
                   </div>
                   <div className="h-64 bg-gray-200 rounded-2xl overflow-hidden relative group col-span-2 md:col-span-2">
-                      <img src={defaultImages[3]} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gallery" />
+                    <img src={defaultImages[3]} className="w-full h-full object-cover group-hover:scale-110 transition duration-500" alt="Gallery" />
                   </div>
                 </>
               )}
@@ -82,4 +72,4 @@ const MediaBlog = () => {
   );
 };
 
-export default MediaBlog;
+export default MediaBlog;

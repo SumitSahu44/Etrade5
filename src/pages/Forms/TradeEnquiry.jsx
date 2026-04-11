@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Send, Globe, Phone, Building2, MapPin, Hash, Mail, User, CheckCircle } from 'lucide-react';
+import { Send, Globe, Phone, Building2, MapPin, Hash, Mail, User, CheckCircle, Eye } from 'lucide-react';
+import PreviewModal from '../../components/Common/PreviewModal';
 
 const TradeEnquiry = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ const TradeEnquiry = () => {
     email: '',
     enquiryType: ''
   });
+  const [showPreview, setShowPreview] = useState(false);
   const [loading, setLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
@@ -54,6 +56,16 @@ const TradeEnquiry = () => {
       setLoading(false);
     }
   };
+
+  const previewFields = [
+    { key: 'traderName', label: 'Trader Name' },
+    { key: 'businessName', label: 'Business Name' },
+    { key: 'businessAddress', label: 'Business Address' },
+    { key: 'gstNo', label: 'GST No.' },
+    { key: 'mobileNo', label: 'Mobile No.' },
+    { key: 'email', label: 'Email Id' },
+    { key: 'enquiryType', label: 'Enquiry Type' },
+  ];
 
   return (
     <div className="py-24 min-h-screen relative overflow-hidden flex items-center justify-center">
@@ -179,15 +191,34 @@ const TradeEnquiry = () => {
                 </div>
               </div>
 
-              <motion.button 
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                type="submit"
-                disabled={loading}
-                className="w-full py-6 bg-blue-600 text-white rounded-[2rem] font-black text-xs uppercase tracking-[0.3em] shadow-2xl shadow-blue-200 hover:bg-blue-700 transition-all flex items-center justify-center gap-3 mt-4 disabled:opacity-70"
-              >
-                {loading ? "Submitting..." : "Submit Enquiry"} {!loading && <Send size={18} />}
-              </motion.button>
+              <div className="flex flex-col md:flex-row gap-4 pt-6">
+                <button
+                  type="button"
+                  onClick={() => setShowPreview(true)}
+                  className="flex-1 py-5 border-2 border-slate-900 text-slate-900 rounded-[2rem] font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
+                >
+                  <Eye size={18} /> Preview
+                </button>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  type="submit"
+                  disabled={loading}
+                  className="flex-[2] py-6 bg-blue-600 text-white rounded-[2rem] font-black text-xs uppercase tracking-[0.3em] shadow-2xl shadow-blue-200 hover:bg-blue-700 transition-all flex items-center justify-center gap-3 disabled:opacity-70"
+                >
+                  {loading ? "Submitting..." : "Submit Enquiry"} {!loading && <Send size={18} />}
+                </motion.button>
+              </div>
+
+              <PreviewModal
+                isOpen={showPreview}
+                onClose={() => setShowPreview(false)}
+                data={formData}
+                fields={previewFields}
+                onConfirm={() => handleSubmit({ preventDefault: () => {} })}
+                loading={loading}
+                title="Trade Enquiry Review"
+              />
 
               <div className="text-center pt-4">
                 <p className="text-[9px] font-black text-slate-600 uppercase ">

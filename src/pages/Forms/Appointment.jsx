@@ -1,6 +1,6 @@
-import React, { useState, useRef } from 'react';
-import { CalendarDays, MapPin, Upload, CheckCircle } from 'lucide-react';
+import { CalendarDays, MapPin, Upload, CheckCircle, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
+import PreviewModal from '../../components/Common/PreviewModal';
 
 const Appointment = () => {
   const [formData, setFormData] = useState({
@@ -12,6 +12,7 @@ const Appointment = () => {
     proofType: '',
     reasonForVisit: ''
   });
+  const [showPreview, setShowPreview] = useState(false);
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -62,6 +63,16 @@ const Appointment = () => {
       setLoading(false);
     }
   };
+
+  const previewFields = [
+    { key: 'visitorName', label: 'Visitor Name' },
+    { key: 'businessName', label: 'Business Name' },
+    { key: 'visitorAddress', label: 'Visitor Address' },
+    { key: 'mobileNo', label: 'Mobile No.' },
+    { key: 'email', label: 'Email Id' },
+    { key: 'proofType', label: 'Proof Type' },
+    { key: 'reasonForVisit', label: 'Reason for Visit' },
+  ];
 
   const inputClass = "w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none focus:border-blue-600 focus:ring-4 focus:ring-blue-50 transition-all text-sm font-semibold placeholder:text-slate-400";
   const labelClass = "block text-[10px] font-black text-slate-500 uppercase tracking-[0.2em] mb-2 ml-1";
@@ -163,15 +174,34 @@ const Appointment = () => {
                 <textarea name="reasonForVisit" required value={formData.reasonForVisit} onChange={handleChange} placeholder="Purpose of Meeting" className={`${inputClass} h-28 resize-none`}></textarea>
               </div>
 
-              <motion.button 
-                whileHover={{ scale: 1.01 }}
-                whileTap={{ scale: 0.99 }}
-                type="submit" 
-                disabled={loading}
-                className="w-full py-5 mt-4 bg-blue-600 text-white font-black rounded-2xl shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all flex items-center justify-center gap-2 disabled:opacity-70"
-              >
-                {loading ? "Submitting..." : "Confirm Request"} {!loading && <CalendarDays size={18} />}
-              </motion.button>
+              <div className="flex flex-col md:flex-row gap-4 pt-4">
+                <button
+                  type="button"
+                  onClick={() => setShowPreview(true)}
+                  className="flex-1 py-5 border-2 border-slate-900 text-slate-900 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-slate-50 transition-all flex items-center justify-center gap-2"
+                >
+                  <Eye size={18} /> Preview
+                </button>
+                <motion.button
+                  whileHover={{ scale: 1.01 }}
+                  whileTap={{ scale: 0.99 }}
+                  type="submit"
+                  disabled={loading}
+                  className="flex-[2] py-5 bg-blue-600 text-white font-black rounded-2xl shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all flex items-center justify-center gap-2 disabled:opacity-70"
+                >
+                  {loading ? "Submitting..." : "Confirm Request"} {!loading && <CalendarDays size={18} />}
+                </motion.button>
+              </div>
+
+              <PreviewModal
+                isOpen={showPreview}
+                onClose={() => setShowPreview(false)}
+                data={formData}
+                fields={previewFields}
+                onConfirm={() => handleSubmit({ preventDefault: () => {} })}
+                loading={loading}
+                title="Appointment Request Review"
+              />
             </form>
           )}
         </div>
