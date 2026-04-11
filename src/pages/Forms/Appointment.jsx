@@ -1,6 +1,7 @@
 import { CalendarDays, MapPin, Upload, CheckCircle, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
 import PreviewModal from '../../components/Common/PreviewModal';
+import { useState, useRef } from 'react';
 
 const Appointment = () => {
   const [formData, setFormData] = useState({
@@ -35,7 +36,7 @@ const Appointment = () => {
     setErrorMsg('');
 
     const submitData = new FormData();
-    submitData.append("siteId", "ParekhETradeMarket02");
+    submitData.append("siteId", "ParekheTradeMarket02");
     Object.keys(formData).forEach(key => {
       submitData.append(key, formData[key]);
     });
@@ -114,7 +115,7 @@ const Appointment = () => {
           ) : (
             <form onSubmit={handleSubmit} className="space-y-6">
               <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight mb-8">Book Appointment</h3>
-              
+
               {errorMsg && (
                 <div className="p-4 bg-red-50 text-red-600 text-xs font-bold uppercase tracking-widest border-l-4 border-red-500 mb-4">
                   {errorMsg}
@@ -198,7 +199,7 @@ const Appointment = () => {
                 onClose={() => setShowPreview(false)}
                 data={formData}
                 fields={previewFields}
-                onConfirm={() => handleSubmit({ preventDefault: () => {} })}
+                onConfirm={() => handleSubmit({ preventDefault: () => { } })}
                 loading={loading}
                 title="Appointment Request Review"
               />

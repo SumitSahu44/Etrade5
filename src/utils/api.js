@@ -15,15 +15,15 @@ export const categoryApi = {
 };
 
 export const blogApi = {
-  getBlogs: (siteId) => api.get(`/blog?siteId=${siteId}`),
+  getBlogs: (siteId) => api.get(`/blogs?siteId=${siteId}`),
 };
 
 export const careerApi = {
-  getJobs: (siteId) => api.get(`/career?siteId=${siteId}`),
+  getJobs: (siteId) => api.get(`/careers?siteId=${siteId}`),
 };
 
 export const mediaApi = {
-  getMedia: (siteId) => api.get(`/media?siteId=${siteId}`),
+  getMedia: (siteId) => api.get(`/media-events?siteId=${siteId}`),
 };
 
 export default api;

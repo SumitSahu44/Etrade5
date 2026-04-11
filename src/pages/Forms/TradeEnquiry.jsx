@@ -31,7 +31,7 @@ const TradeEnquiry = () => {
     setErrorMsg('');
 
     const submitData = new FormData();
-    submitData.append("siteId", "ParekhETradeMarket02");
+    submitData.append("siteId", "ParekheTradeMarket02");
     Object.keys(formData).forEach(key => {
       submitData.append(key, formData[key]);
     });
@@ -69,33 +69,30 @@ const TradeEnquiry = () => {
 
   return (
     <div className="py-24 min-h-screen relative overflow-hidden flex items-center justify-center">
-      
+
       {/* --- ELITE BACKGROUND TEXTURES --- */}
       <div className="absolute inset-0 bg-[#f0f4f8]"></div>
       <div className="absolute top-[-10%] left-[-10%] w-[600px] h-[600px] bg-blue-200/40 rounded-full blur-[120px] animate-pulse"></div>
       <div className="absolute bottom-[-10%] right-[-10%] w-[600px] h-[600px] bg-indigo-200/30 rounded-full blur-[120px]"></div>
 
-      <div className="absolute inset-0 opacity-[0.04] pointer-events-none" 
+      <div className="absolute inset-0 opacity-[0.04] pointer-events-none"
         style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23000000' fill-opacity='1'%3E%3Cpath d='M50 50c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10zM10 10c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")` }}>
       </div>
 
       {/* --- FORM CONTAINER --- */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         className="max-w-4xl w-full px-6 relative z-10"
       >
         <div className="bg-white/60 backdrop-blur-2xl p-10 md:p-16 rounded-[4rem] border border-white/50 shadow-[0_32px_64px_-16px_rgba(0,0,0,0.1)]">
-          
+
           {/* Header */}
           <div className="mb-12 flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-blue-100 pb-8">
             <div>
-              <div className="flex items-center gap-2 text-blue-600 mb-3">
-                <Globe size={18} className="animate-spin-slow" />
-                <span className="text-[10px] font-black uppercase tracking-[0.3em]">Trade Enquiry</span>
-              </div>
+
               <h2 className="text-4xl font-bold text-slate-900 tracking-tighter uppercase leading-none">
-                B2B <span className="text-blue-600">Portal</span>
+                Trade <span className="text-blue-600">Enquiry</span>
               </h2>
             </div>
             <p className="text-slate-500 font-medium text-sm max-w-[240px]">
@@ -104,9 +101,9 @@ const TradeEnquiry = () => {
           </div>
 
           {isSubmitted ? (
-            <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }} 
-              animate={{ opacity: 1, scale: 1 }} 
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
               className="flex flex-col items-center justify-center text-center py-12"
             >
               <div className="w-20 h-20 bg-blue-50 rounded-full flex items-center justify-center mb-6">
@@ -215,7 +212,7 @@ const TradeEnquiry = () => {
                 onClose={() => setShowPreview(false)}
                 data={formData}
                 fields={previewFields}
-                onConfirm={() => handleSubmit({ preventDefault: () => {} })}
+                onConfirm={() => handleSubmit({ preventDefault: () => { } })}
                 loading={loading}
                 title="Trade Enquiry Review"
               />

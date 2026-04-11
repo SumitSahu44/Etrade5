@@ -53,17 +53,25 @@ const Navbar = () => {
         <div className="flex justify-between h-20 items-center">
 
           {/* --- LOGO SECTION --- */}
-          <Link to="/" className="flex items-center gap-3 flex-shrink-0 group">
+          <Link to="/" className="flex items-center  flex-shrink-0 group">
             <div
-              style={{ backgroundColor: brandBlue }}
-              className="w-10 h-10 md:w-11 md:h-11 flex items-center justify-center rounded-xl text-white font-black text-xl shadow-lg"
+              className="w-14 h-14 md:w-14 md:h-14 flex items-center justify-center rounded-xl overflow-hidden"
             >
-              P
+              <img
+                src="/4.png"
+                alt="Logo"
+                className="w-full h-full object-cover"
+              />
             </div>
+
             <div className="flex flex-col">
               <h1 className="text-[15px] md:text-[17px] font-black leading-none text-slate-900 flex items-center gap-1">
-                PAREKH <span style={{ color: accentBlue }} className="flex items-baseline"><span className="lowercase italic">e</span>-TRADE</span>
+                PAREKH{" "}
+                <span style={{ color: accentBlue }} className="flex items-baseline">
+                  <span className="lowercase italic">e</span>-TRADE
+                </span>
               </h1>
+
               <div className="flex items-center gap-1.5 mt-1">
                 <span className="text-[10px] font-bold text-slate-500 uppercase tracking-tight">
                   Market (Textile)

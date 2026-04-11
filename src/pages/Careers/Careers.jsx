@@ -6,14 +6,16 @@ import { careerApi } from '../../utils/api';
 const Careers = () => {
   const [jobs, setJobs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const siteId = 'ParekhETradeMarket02';
+  const siteId = 'ParekheTradeMarket02';
   const applicationEmail = 'shaibse@gmail.com';
 
   useEffect(() => {
     const fetchJobs = async () => {
       try {
         const response = await careerApi.getJobs(siteId);
-        setJobs(response.data || []);
+        if (response.data && response.data.success) {
+          setJobs(response.data.data || []);
+        }
       } catch (error) {
         console.error("Error fetching jobs:", error);
       } finally {
@@ -23,8 +25,9 @@ const Careers = () => {
     fetchJobs();
   }, []);
 
-  const handleApply = () => {
-    window.location.href = `mailto:${applicationEmail}?subject=Application for Career Opportunity`;
+  const handleApply = (job) => {
+    const email = job.email || job.contactEmail || applicationEmail;
+    window.location.href = `mailto:${email}?subject=Application for ${job.title} - ${siteId}`;
   };
 
   return (
@@ -90,10 +93,10 @@ const Careers = () => {
                 </div>
 
                 <button
-                  onClick={handleApply}
-                  className="w-full md:w-auto bg-slate-950 text-white px-10 py-4 rounded-2xl text-xs font-black uppercase tracking-[0.2em] shadow-xl shadow-slate-900/20 hover:bg-blue-600 hover:shadow-blue-200 transition-all flex items-center justify-center gap-2"
+                  onClick={() => handleApply(job)}
+                  className="w-full md:w-auto bg-slate-950 text-white px-10 py-4 rounded-2xl text-[10px] font-black uppercase tracking-[0.2em] shadow-xl shadow-slate-900/20 hover:bg-blue-600 hover:shadow-blue-200 transition-all flex items-center justify-center gap-2 group-hover:scale-105 active:scale-95"
                 >
-                  Apply Now <ArrowRight size={16} />
+                  Apply Now <ArrowRight size={14} />
                 </button>
               </motion.div>
             ))}

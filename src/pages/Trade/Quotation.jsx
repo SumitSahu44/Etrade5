@@ -34,7 +34,7 @@ const Quotation = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          siteId: "ParekhETradeMarket02",
+          siteId: "ParekheTradeMarket02",
           ...formData
         }),
       });

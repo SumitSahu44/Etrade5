@@ -92,7 +92,7 @@ const BuyerPlatform = () => {
       submitData.append('kycDocuments', files[i]);
     }
 
-    submitData.append('siteId', 'ParekhETradeMarket02');
+    submitData.append('siteId', 'ParekheTradeMarket02');
 
     setSubmitting(true);
     setShowPreview(false); // Make sure modal closes

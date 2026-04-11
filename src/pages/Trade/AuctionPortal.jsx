@@ -41,7 +41,7 @@ const AuctionPortal = () => {
     setErrorMsg('');
 
     const submitData = new FormData();
-    submitData.append("siteId", "ParekhETradeMarket02");
+    submitData.append("siteId", "ParekheTradeMarket02");
     Object.keys(formData).forEach(key => {
       submitData.append(key, formData[key]);
     });
@@ -71,11 +71,11 @@ const AuctionPortal = () => {
   };
 
   return (
-    <div className="py-24 bg-slate-50 min-h-screen font-sans">
+    <div className="py-24 bg-slate-50 font-sans">
       <div className="max-w-7xl mx-auto px-6">
-        
+
         {/* --- SECTION 1: E-AUCTION PARTICIPATION FORM --- */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           className="mb-20 bg-white rounded-[3rem] border border-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden"
@@ -169,7 +169,7 @@ const AuctionPortal = () => {
                 </div>
               </div>
 
-              <motion.button 
+              <motion.button
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
                 type="submit"
@@ -182,54 +182,7 @@ const AuctionPortal = () => {
           )}
         </motion.div>
 
-        {/* --- SECTION 2: LIVE AUCTION LISTING --- */}
-        <div className="flex justify-between items-end mb-12">
-          <div>
-            <h2 className="text-3xl font-black text-slate-900 tracking-tighter uppercase">LIVE e-AUCTIONS</h2>
-            <p className="text-slate-500 font-medium mt-1">Real-time bidding for textile machinery and surplus stock.</p>
-          </div>
-          <div className="bg-red-500 text-white px-4 py-2 rounded-lg text-[10px] font-black uppercase tracking-widest animate-pulse flex items-center gap-2">
-            <span className="w-2 h-2 bg-white rounded-full"></span> {auctions.length} Live Sessions
-          </div>
-        </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {auctions.map((auc) => (
-            <motion.div 
-              key={auc.id} 
-              whileHover={{ y: -10 }}
-              className="bg-white rounded-3xl overflow-hidden shadow-sm border border-slate-200 group hover:shadow-2xl hover:shadow-slate-200 transition-all duration-300"
-            >
-              <div className="p-8">
-                <div className="flex justify-between text-[10px] font-black text-slate-400 mb-6 uppercase tracking-widest">
-                  <span className="px-3 py-1 bg-slate-100 rounded-full">ID: {auc.id}</span>
-                  <span className="flex items-center gap-1 text-red-500 font-bold"><Clock size={14}/> {auc.time} left</span>
-                </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-6 leading-tight group-hover:text-blue-600 transition-colors">{auc.item}</h3>
-                
-                <div className="flex items-center gap-2 text-slate-500 text-sm font-medium mb-8">
-                  <div className="p-2 bg-slate-50 rounded-lg"><MapPin size={16} className="text-blue-500"/></div>
-                  {auc.loc} Trading Hub
-                </div>
-
-                <div className="bg-slate-50 p-5 rounded-2xl mb-8 border border-slate-100">
-                  <p className="text-[10px] text-slate-400 font-black uppercase tracking-widest mb-1">Current Highest Bid</p>
-                  <p className="text-3xl font-black text-slate-900 tracking-tighter">{auc.bid}</p>
-                </div>
-
-                <button className="w-full py-4 bg-slate-900 text-white rounded-xl font-black text-xs uppercase tracking-[0.2em] hover:bg-blue-600 transition-all flex items-center justify-center gap-3">
-                  <Gavel size={18}/> Place Bid Now
-                </button>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-
-        <div className="text-center mt-16">
-          <p className="text-[10px] font-black text-slate-600 tracking-[0.2em]">
-            Official Auction Portal • Parekh e-Trade Hub
-          </p>
-        </div>
       </div>
     </div>
   );

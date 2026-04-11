@@ -50,7 +50,7 @@ const ProductMarketplace = () => {
     const fetchMarketplaceData = async () => {
       try {
         setLoading(true);
-        const siteId = 'ParekhETradeMarket02';
+        const siteId = 'ParekheTradeMarket02';
 
         // Fetch Categories and Products in Parallel
         const [prodRes, catRes] = await Promise.all([
