@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'; // <-- Ye imports zaroori hain
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Preloader from './components/Common/Preloader';
@@ -33,47 +33,47 @@ function App() {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Check if user has already seen the loader in this session
-    const hasSeenLoader = sessionStorage.getItem('hasSeenLoader');
-
-    if (hasSeenLoader) {
+    const timer = setTimeout(() => {
       setIsLoading(false);
-    } else {
-      const timer = setTimeout(() => {
-        setIsLoading(false);
-        sessionStorage.setItem('hasSeenLoader', 'true'); // Mark as seen
-      }, 4500);
+    }, 1800); // 🔥 perfect timing (1.8 sec smooth feel)
 
-      return () => clearTimeout(timer);
-    }
+    return () => clearTimeout(timer);
   }, []);
 
   return (
     <Router>
-      {/* AnimatePresence loader ke smooth exit animation ke liye zaroori hai */}
+
+      {/* 🔥 Scroll reset on route change */}
+      <ScrollToTop />
+
+      {/* 🔥 One-time Preloader */}
       <AnimatePresence mode="wait">
         {isLoading && <Preloader key="loader" />}
       </AnimatePresence>
 
-      {/* <ScrollToTop /> */}
-
+      {/* 🔥 Main Layout */}
       <div className="min-h-screen bg-white flex flex-col">
+
         <Navbar />
 
         <main className="flex-grow">
           <Routes>
-            {/* Main Home Route */}
-            <Route path="/" element={
-              <>
-                <Hero />
-                <ProductServices />
-                <AssociatesMap />
-                <Tenders />
-                <MediaBlog />
-              </>
-            } />
 
-            {/* Dedicated Routes */}
+            {/* 🏠 Home */}
+            <Route
+              path="/"
+              element={
+                <>
+                  <Hero />
+                  <ProductServices />
+                  <AssociatesMap />
+                  <Tenders />
+                  <MediaBlog />
+                </>
+              }
+            />
+
+            {/* 🌐 Other Routes */}
             <Route path="/trade-platform" element={<TradePlatform />} />
             <Route path="/products" element={<ProductServices />} />
             <Route path="/tenders" element={<Tenders />} />
@@ -94,11 +94,13 @@ function App() {
             <Route path="/blog" element={<Blog />} />
             <Route path="/associates" element={<AssociatesMap />} />
             <Route path="/admin-dashboard" element={<AdminDashboard />} />
+
           </Routes>
         </main>
 
         <TextileChatbot />
         <Footer />
+
       </div>
     </Router>
   );

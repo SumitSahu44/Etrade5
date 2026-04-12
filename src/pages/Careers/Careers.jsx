@@ -48,7 +48,12 @@ const Careers = () => {
           </motion.div>
         </div>
       </section> */}
-
+      <div className="text-center mt-10  mb-12">
+        <h2 className="text-4xl md:text-5xl font-extrabold text-slate-900">
+          Careers <span className="text-blue-600">Opportunities</span>
+        </h2>
+        <div className="w-20 h-1 bg-blue-600 mx-auto mt-4 rounded-full"></div>
+      </div>
       {/* --- JOB LISTINGS / FALLBACK --- */}
       <section className=" max-w-5xl mx-auto px-6">
         <div className="flex justify-between items-end mb-12">
@@ -108,15 +113,23 @@ const Careers = () => {
             animate={{ opacity: 1, scale: 1 }}
             className="text-center py-24 bg-white rounded-[3rem] border border-slate-100 shadow-xl shadow-slate-900/5"
           >
-            <div className="w-20 h-20 bg-blue-50 text-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6">
+            {/* Icon */}
+            <div className="w-20 h-20 bg-gradient-to-br from-blue-50 to-blue-100 text-blue-600 rounded-3xl flex items-center justify-center mx-auto mb-6 shadow-sm">
               <HelpCircle size={40} />
             </div>
-            <h3 className="text-3xl font-bold text-slate-900 uppercase tracking-tighter mb-4">
-              ( At present, No Vacancy )
+
+            {/* Title */}
+            <h3 className="text-2xl md:text-3xl font-bold text-slate-900 mb-4">
+              No Open Positions
             </h3>
-            {/* <p className="text-slate-500 font-medium max-w-md mx-auto">
-              Building our next wave of opportunities. Join our digital textile revolution soon.
-            </p> */}
+
+            {/* 🔥 Styled Same Line */}
+            <div className="inline-block px-6 py-3 bg-slate-100 border border-slate-200 rounded-xl shadow-sm">
+              <p className="text-slate-600 text-sm font-medium italic tracking-wide">
+                ( At present, No Vacancy )
+              </p>
+            </div>
+
           </motion.div>
         )}
       </section>
