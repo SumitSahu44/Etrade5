@@ -27,7 +27,7 @@ const Blog = () => {
   return (
     <div className="py-20 bg-[#f8fafc] font-sans min-h-screen">
       <div className="max-w-7xl mx-auto px-6">
-        
+
         {/* Header Tag */}
         <div className="text-center mb-16">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 bg-blue-50 border border-blue-100 rounded-full text-[10px] font-bold text-blue-600 uppercase tracking-widest mb-4">
@@ -77,7 +77,7 @@ const Blog = () => {
                   <h3 className="text-xl font-bold text-slate-900 mb-4 group-hover:text-blue-600 transition-colors line-clamp-2">
                     {blog.title}
                   </h3>
-                  <div 
+                  <div
                     className="text-slate-500 text-sm line-clamp-3 mb-6 flex-grow overflow-hidden"
                     dangerouslySetInnerHTML={{ __html: blog.content }}
                   />
@@ -113,9 +113,9 @@ const Blog = () => {
               </div>
             </div>
             <div className="mt-10 px-6 py-3 bg-slate-50 border border-slate-100 rounded-2xl inline-block">
-               <p className="text-slate-400 text-xs font-bold uppercase tracking-widest leading-none">
-                 Official Update • India
-               </p>
+              <p className="text-slate-400 text-xs font-bold uppercase tracking-widest leading-none">
+                Official Update • India
+              </p>
             </div>
           </div>
         )}

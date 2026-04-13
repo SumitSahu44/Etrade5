@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from '../../utils/api';
 import { Gavel, Clock, MapPin, User, Building2, Hash, Phone, Mail, Upload, AlertCircle, CheckCircle } from 'lucide-react';
 
 const AuctionPortal = () => {
@@ -50,7 +51,7 @@ const AuctionPortal = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/auction", {
+      const response = await fetch(`${API_BASE_URL}/auction`, {
         method: "POST",
         body: submitData,
       });

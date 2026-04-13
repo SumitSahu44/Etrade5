@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from '../../utils/api';
 import { Send, Globe, Phone, Building2, MapPin, Hash, Mail, User, CheckCircle, Eye } from 'lucide-react';
 import PreviewModal from '../../components/Common/PreviewModal';
 
@@ -37,7 +38,7 @@ const TradeEnquiry = () => {
     });
 
     try {
-      const response = await fetch("http://localhost:5000/api/trade-enquiry", {
+      const response = await fetch(`${API_BASE_URL}/trade-enquiry`, {
         method: "POST",
         body: submitData,
       });

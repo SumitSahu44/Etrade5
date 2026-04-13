@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { BarChart3, Users, ShoppingBag, TrendingUp, Search, Calendar, Filter, ChevronRight, CheckCircle2, Factory, Loader2 } from 'lucide-react';
+import { API_BASE_URL } from '../../utils/api';
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('authPerson');
@@ -15,7 +17,7 @@ const AdminDashboard = () => {
   // Fetch data
   const fetchAuthPersons = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/authorized-person/list');
+      const res = await fetch(`${API_BASE_URL}/authorized-person/list`);
       const data = await res.json();
       if(data.success) setAuthPersons(data.data);
     } catch (e) {
@@ -25,7 +27,7 @@ const AdminDashboard = () => {
 
   const fetchSubmissions = async (type) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/etrade/submissions?type=${type}`);
+      const res = await fetch(`${API_BASE_URL}/etrade/submissions?type=${type}`);
       const data = await res.json();
       if (data.success) {
           if (type === 'buyer') setBuyers(data.data);
@@ -45,7 +47,7 @@ const AdminDashboard = () => {
   const handleAddSingle = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch('http://localhost:5000/api/authorized-person/add', {
+      const res = await fetch(`${API_BASE_URL}/authorized-person/add`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: authName, code: authCode })
@@ -73,7 +75,7 @@ const AdminDashboard = () => {
     formData.append('file', csvFile);
 
     try {
-      const res = await fetch('http://localhost:5000/api/authorized-person/bulk-upload', {
+      const res = await fetch(`${API_BASE_URL}/authorized-person/bulk-upload`, {
         method: 'POST',
         body: formData
       });

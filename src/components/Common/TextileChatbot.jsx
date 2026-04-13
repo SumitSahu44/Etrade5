@@ -63,7 +63,7 @@ const TextileChatbot = () => {
                   <Bot size={22} />
                 </div>
                 <div>
-                  <h3 className="text-sm font-black tracking-wider uppercase">Parekh e-Trade</h3>
+                  <h3 className="text-sm font-black tracking-wider ">Parekh e-Trade</h3>
                   <p className="text-[10px] text-blue-400 font-bold uppercase tracking-widest">Textile Assistant Online</p>
                 </div>
               </div>

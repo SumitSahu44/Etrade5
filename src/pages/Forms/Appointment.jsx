@@ -1,5 +1,6 @@
 import { CalendarDays, MapPin, Upload, CheckCircle, Eye } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { API_BASE_URL } from '../../utils/api';
 import PreviewModal from '../../components/Common/PreviewModal';
 import { useState, useRef } from 'react';
 
@@ -45,7 +46,7 @@ const Appointment = () => {
     }
 
     try {
-      const response = await fetch("http://localhost:5000/api/appointment", {
+      const response = await fetch(`${API_BASE_URL}/appointment`, {
         method: "POST",
         body: submitData,
       });

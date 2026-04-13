@@ -1,68 +1,109 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import logo from '/4.png';
 
 const Preloader = () => {
+    // Animation Variants for cleaner code
+    const containerVars = {
+        initial: { y: 0 },
+        exit: {
+            y: '-100vh',
+            transition: { duration: 0.8, ease: [0.76, 0, 0.24, 1], delay: 0.2 }
+        }
+    };
+
+    const childVars = {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
+    };
+
     return (
         <motion.div
-            initial={{ y: 0 }}
-            exit={{ y: '-100vh' }}
-            transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050816] text-white px-4"
+            variants={containerVars}
+            initial="initial"
+            exit="exit"
+            className="fixed inset-0 z-[9999] flex flex-col items-center justify-center bg-[#050816] text-white px-4 overflow-hidden"
         >
-            <div className="text-center">
+            <div className="text-center flex flex-col items-center">
 
-                {/* 🔥 Main Branding */}
-                <motion.h1
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
-                    className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tight uppercase leading-tight"
+                {/* 1. LOGO SECTION - Subtle scale and soft glow */}
+                <motion.div
+                    initial={{ scale: 0.8, opacity: 0 }}
+                    animate={{ scale: 1, opacity: 1 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="relative mb-6"
                 >
-                    <span className="text-white">PAREKH</span>{' '}
-                    <span className="text-[#155dfc]">e-TRADE</span>{' '}
-                    <span className="text-white">Market</span>
-                </motion.h1>
+                    {/* Soft ambient glow */}
+                    <div className="absolute inset-0 bg-[#155dfc]/20 blur-3xl rounded-full scale-150" />
 
-                {/* 🔥 Subtitle */}
-                <motion.p
+                    <div className="relative h-20 w-20 md:h-24 md:w-24 flex items-center justify-center">
+                        <img
+                            src={logo}
+                            alt="Logo"
+                            className="h-[85%] w-[85%] object-contain relative z-10"
+                        />
+                    </div>
+                </motion.div>
+
+                {/* 2. MAIN BRANDING - Uses "Mask" effect for premium feel */}
+                <div className="overflow-hidden mb-1">
+                    <motion.h1
+                        variants={childVars}
+                        initial="initial"
+                        animate="animate"
+                        transition={{ delay: 0.1 }}
+                        className="text-3xl md:text-5xl lg:text-6xl font-black tracking-tighter"
+                    >
+                        <span className="text-white">PAREKH</span>{' '}
+                        <span className="text-[#155dfc]">e-TRADE</span>{' '}
+                        <span className="text-white">Market</span>
+                    </motion.h1>
+                </div>
+
+                {/* 3. SUBTITLE & LINE */}
+                <motion.div
                     initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.8 }}
+                    animate={{ opacity: 1 }}
                     transition={{ delay: 0.4 }}
-                    className="text-sm md:text-base mt-2 text-slate-300 font-semibold tracking-wide"
+                    className="flex flex-col items-center w-full"
                 >
-                    (Textile)
-                </motion.p>
+                    <p className="text-xs md:text-sm text-slate-400 font-medium tracking-[0.2em] uppercase">
+                        Textile Solutions
+                    </p>
 
-                {/* 🔥 Animated Line */}
-                <motion.div
-                    initial={{ width: 0 }}
-                    animate={{ width: '100%' }}
-                    transition={{ duration: 1.2, ease: "easeInOut" }}
-                    className="h-[2px] bg-[#155dfc] mt-4 mx-auto max-w-[260px]"
-                />
+                    <motion.div
+                        initial={{ width: 0 }}
+                        animate={{ width: '60px' }}
+                        transition={{ delay: 0.6, duration: 0.8 }}
+                        className="h-[1px] bg-[#155dfc] mt-4"
+                    />
+                </motion.div>
 
-                {/* 🔥 Location */}
+                {/* 4. LOCATION - Minimalist style */}
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 0.7 }}
-                    transition={{ delay: 0.6 }}
-                    className="mt-4 text-xs md:text-sm font-mono tracking-[0.3em] uppercase text-slate-400"
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 0.5, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                    className="mt-6 text-[10px] md:text-xs font-light tracking-[0.4em] uppercase text-slate-300"
                 >
                     Hyderabad • TG • India
                 </motion.div>
 
             </div>
 
-            {/* 🔥 Progress Animation */}
-            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 overflow-hidden w-28 h-[2px] bg-white/10 rounded-full">
+            {/* 5. PROGRESS LOADER - Slimmer and more modern */}
+            <div className="absolute bottom-12 w-32 h-[1px] bg-white/5 overflow-hidden">
                 <motion.div
-                    initial={{ x: '-100%' }}
-                    animate={{ x: '100%' }}
-                    transition={{ repeat: Infinity, duration: 1.2, ease: "linear" }}
-                    className="w-full h-full bg-[#155dfc]"
+                    initial={{ left: '-100%' }}
+                    animate={{ left: '100%' }}
+                    transition={{
+                        repeat: Infinity,
+                        duration: 1.5,
+                        ease: "easeInOut"
+                    }}
+                    className="absolute top-0 bottom-0 w-1/2 bg-gradient-to-r from-transparent via-[#155dfc] to-transparent"
                 />
             </div>
-
         </motion.div>
     );
 };

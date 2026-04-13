@@ -2,6 +2,7 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { UserCheck, Building2, ShoppingBag, FolderLock, Eye, SendHorizontal, CheckCircle, LockKeyhole, Loader2 } from 'lucide-react';
 import PreviewModal from '../../components/Common/PreviewModal';
+import { API_BASE_URL } from '../../utils/api';
 
 const BuyerPlatform = () => {
   const [showPreview, setShowPreview] = useState(false);
@@ -51,8 +52,8 @@ const BuyerPlatform = () => {
     }
     setValidating(true);
     try {
-      // Connect to the unified backend running on 4000
-      const response = await fetch('http://localhost:5000/api/authorized-person/validate', {
+      // Connect to the unified backend
+      const response = await fetch(`${API_BASE_URL}/authorized-person/validate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: authName, code: authCode })
@@ -97,7 +98,7 @@ const BuyerPlatform = () => {
     setSubmitting(true);
     setShowPreview(false); // Make sure modal closes
     try {
-      const response = await fetch('http://localhost:5000/api/etrade/buyer', {
+      const response = await fetch(`${API_BASE_URL}/etrade/buyer`, {
         method: 'POST',
         body: submitData
       });
@@ -366,7 +367,7 @@ const BuyerPlatform = () => {
         onClose={() => setShowPreview(false)}
         data={formData}
         fields={previewFields}
-        onConfirm={() => handleSubmit({ preventDefault: () => {}, target: formRef.current })}
+        onConfirm={() => handleSubmit({ preventDefault: () => { }, target: formRef.current })}
         loading={submitting}
         title="Buyer Account Preview"
       />

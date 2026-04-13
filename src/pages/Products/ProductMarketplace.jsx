@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Filter, ArrowUpRight, Box, Zap, ShieldCheck, Info } from 'lucide-react';
-import { productApi, categoryApi } from '../../utils/api';
+import { productApi, categoryApi, IMAGE_BASE_URL } from '../../utils/api';
 
 const ProductMarketplace = () => {
   const [activeCategory, setActiveCategory] = useState('All');
@@ -68,7 +68,7 @@ const ProductMarketplace = () => {
             category: p.category,
             name: p.title,
             spec: `Category: ${p.category}`,
-            img: `http://localhost:5000/${p.image}`,
+            img: `${IMAGE_BASE_URL}/${p.image}`,
             price: "Inquiry Only"
           }));
           setDynamicProducts(mapped);

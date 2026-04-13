@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FileText, Download, Printer, Send, Calculator, CheckCircle2, User, Building2, MapPin, Hash, Phone, Mail, ListTodo } from 'lucide-react';
+import { API_BASE_URL } from '../../utils/api';
 
 const Quotation = () => {
   const [formData, setFormData] = useState({
@@ -30,7 +31,7 @@ const Quotation = () => {
     setErrorMsg('');
 
     try {
-      const response = await fetch("http://localhost:5000/api/quotation", {
+      const response = await fetch(`${API_BASE_URL}/quotation`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
