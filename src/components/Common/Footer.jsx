@@ -1,9 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail } from "lucide-react";
+import { MapPin } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+ const accentBlue = "#2563eb";
 
   const Icons = {
     Linkedin: () => (
@@ -45,15 +47,28 @@ const Footer = () => {
               </div>
 
               {/* Text */}
-              <div className="flex flex-col justify-center">
-                <span className="text-2xl font-black text-white leading-tight">
-                  PAREKH <span className="text-blue-600">e-TRADE</span>
-                </span>
-                <span className="text-[10px] text-slate-500 uppercase tracking-wider">
-                  Market (Textile)
-                </span>
-              </div>
+             <div className="flex flex-col justify-center">
+  {/* Line 1: PAREKH (White) */}
+  <span className="text-[13px] md:text-[14px] font-black text-white leading-none">
+    PAREKH
+  </span>
 
+  {/* Line 2: e-TRADE Market (Textile) (Blue) */}
+  <div className="flex items-baseline gap-1 mt-0.5">
+    <span style={{ color: accentBlue }}  className="text-[12px] md:text-[13px] font-black leading-none">
+      e-TRADE
+    </span>
+    <span style={{ color: accentBlue }} className="text-[12px] md:text-[13px]  font-black uppercase">
+      Market (Textile)
+    </span>
+  </div>
+
+  {/* Line 3: Location (Slate/Greyish) */}
+  <div className="flex items-center text-[8px] font-black text-slate-100 uppercase mt-0.5">
+    <MapPin size={9} className="mr-0.5" />
+     <span className="tracking-wider">Hyderabad, TG, India</span>
+  </div>
+</div>
             </Link>
 
             <p className="text-sm leading-relaxed">

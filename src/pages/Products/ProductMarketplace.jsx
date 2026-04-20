@@ -18,7 +18,7 @@ const ProductMarketplace = () => {
       name: "Organic Long-Staple Cotton",
       spec: "Grade: AAA | Origin: India",
       img: "https://img.freepik.com/premium-photo/textile-designer-isolated-flat-color-background_980928-38343.jpg?ga=GA1.1.124606815.1772781809&semt=ais_rp_progressive&w=740&q=80",
-      price: "Market Rate"
+      // price: "Market Rate"
     },
     {
       id: 2,
@@ -26,7 +26,7 @@ const ProductMarketplace = () => {
       name: "Air-Jet Weaving Loom",
       spec: "Model: PX-2026 | High Speed",
       img: "https://img.freepik.com/premium-photo/high-angle-closeup-shot-colorful-textiles-with-beautiful-asian-patterns_926199-3639020.jpg?w=1060",
-      price: "Inquiry Only"
+      // price: "Inquiry Only"
     },
     {
       id: 3,
@@ -34,7 +34,7 @@ const ProductMarketplace = () => {
       name: "Premium Silk Jacquard",
       spec: "100% Pure Silk | Export Quality",
       img: "https://img.freepik.com/premium-photo/thai-silk-pattern-design_147059-200.jpg?w=1480",
-      price: "₹1,200/mtr"
+      // price: "₹1,200/mtr"
     },
     {
       id: 4,
@@ -42,7 +42,7 @@ const ProductMarketplace = () => {
       name: "Precision Spindle Set",
       spec: "Stainless Steel | Anti-Corrosive",
       img: "https://img.freepik.com/free-photo/fabric-background-with-floral-pattern_1385-1975.jpg?t=st=1773901894~exp=1773905494~hmac=6086c537b0ddf17663a89b1e6cd11e1c90bf283e9e9305c9fd70f6f77ac8e0a2&w=1060",
-      price: "₹8,500/unit"
+      // price: "₹8,500/unit"
     },
   ];
 
@@ -69,7 +69,7 @@ const ProductMarketplace = () => {
             name: p.title,
             spec: `Category: ${p.category}`,
             img: `${IMAGE_BASE_URL}/${p.image}`,
-            price: "Inquiry Only"
+            // price: "Inquiry Only"
           }));
           setDynamicProducts(mapped);
         }

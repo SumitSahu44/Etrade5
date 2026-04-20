@@ -9,14 +9,9 @@ const Terms = () => {
       icon: <ShieldAlert size={20} />,
       content: "All Buyers and Sellers must be registered entities with valid GST and Trade Licenses. Verification of documents (MSME, CIN) is mandatory before any trade transaction can be initiated on the PAREKH e-TRADE platform."
     },
+   
     {
       id: "02",
-      title: "Bidding & Auction Rules",
-      icon: <Scale size={20} />,
-      content: "Bids placed during e-Auctions are legally binding. Withdrawal of a winning bid may result in temporary or permanent suspension of the member's account and forfeiture of security deposits if applicable."
-    },
-    {
-      id: "03",
       title: "Payments & Spares",
       icon: <FileText size={20} />,
       content: "All payments must be made via authorized banking channels. PAREKH e-TRADE serves as a marketplace facilitator; the final contract of sale is between the buyer and seller directly."
@@ -75,12 +70,12 @@ const Terms = () => {
                 Last Updated: April 2026
               </p>
             </div>
-            <div className="text-center md:text-right">
+            {/* <div className="text-center md:text-right">
               <p className="text-xs font-black text-slate-400 uppercase tracking-tighter mb-1">Legal Queries</p>
               <a href="mailto:legal@parekhtrade.com" className="text-blue-600 font-bold hover:underline">
                 legal@parekhtrade.com
               </a>
-            </div>
+            </div> */}
           </div>
         </div>
 

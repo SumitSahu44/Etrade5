@@ -64,25 +64,28 @@ const Navbar = () => {
               />
             </div>
 
-            <div className="flex flex-col">
-              <h1 className="text-[15px] md:text-[17px] font-black leading-none text-slate-900 flex items-center gap-1">
-                PAREKH{" "}
-                <span style={{ color: accentBlue }} className="flex items-baseline">
-                  <span className="lowercase italic">e</span>-TRADE
-                </span>
-              </h1>
+           <div className="flex flex-col">
+  {/* Line 1: PAREKH (Black) */}
+  <h1 className="text-[13px] md:text-[14px] font-black leading-none text-black">
+    PAREKH
+  </h1>
 
-              <div className="flex items-center gap-1.5 mt-1">
-                <span className="text-[10px] font-bold text-slate-500 uppercase tracking-tight">
-                  Market (Textile)
-                </span>
-                <span className="w-1 h-1 rounded-full bg-slate-300"></span>
-                <div className="flex items-center text-[9px] font-extrabold text-blue-600 uppercase ">
-                  <MapPin size={10} className="mr-0.5" />
-                  Hyderabad, TG, India
-                </div>
-              </div>
-            </div>
+  {/* Line 2: e-TRADE Market (Textile) (Same Color & Same Weight) */}
+  <div style={{ color: accentBlue }} className="flex items-baseline gap-1 mt-0.5">
+    <span className="text-[12px] md:text-[13px] font-black leading-none">
+      <span className="lowercase italic">e</span>-TRADE
+    </span>
+    <span className="text-[12px] md:text-[13px] font-black uppercase">
+      Market (Textile)
+    </span>
+  </div>
+
+  {/* Line 3: Location (Subtle Color) */}
+ <div className="flex items-center text-[8px] font-black text-slate-900 uppercase mt-0.5">
+  <MapPin size={9} className="mr-0.5" />
+  <span className="tracking-wider">Hyderabad, TG, India</span>
+</div>
+</div>
           </Link>
 
           {/* --- DESKTOP NAVIGATION --- */}

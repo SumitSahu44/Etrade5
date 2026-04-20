@@ -54,6 +54,7 @@ const Quotation = () => {
       setLoading(false);
     }
   };
+ const accentBlue = "#2563eb";
 
   return (
     <div className="py-20 bg-slate-50 min-h-screen relative overflow-hidden font-sans">
@@ -85,17 +86,30 @@ const Quotation = () => {
         >
           {/* Top Branding Bar */}
           <div className="p-10 md:p-14 bg-slate-50 flex flex-col md:flex-row justify-between gap-8 border-b border-slate-100">
-            <div>
-              <h1 className="text-2xl font-black text-slate-900 mb-2">PAREKH <span className="text-blue-600 font-black">e-TRADE</span></h1>
-              <p className="text-xs text-slate-500 font-bold uppercase tracking-widest leading-relaxed">
-                Market (Textile) Hub <br /> Quotation Submission Portal
-              </p>
-            </div>
-            <div className="text-right flex flex-col items-end">
-              <div className="bg-blue-100 text-blue-700 px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest">
-                Form Mode
-              </div>
-            </div>
+            <div className="flex flex-col">
+  {/* Line 1: PAREKH (Black) */}
+  <h1 className="text-[14px] md:text-[15px] font-black text-slate-900 leading-none">
+    PAREKH
+  </h1>
+
+  {/* Line 2: e-TRADE Market (Textile) (All Blue) */}
+  <div style={{ color: accentBlue }} className="flex items-baseline gap-1 mt-0.5">
+    <span className="text-[13px] md:text-[14px] font-black leading-none">
+      <span className="lowercase italic">e</span>-TRADE
+    </span>
+    <span className="text-[13px] md:text-[14px] font-black uppercase tracking-tight">
+      Market (Textile) Hub
+    </span>
+  </div>
+
+  {/* Line 3: Portal Info */}
+  <div className="mt-0.5">
+    <p className="text-[11px] font-black uppercase text-slate-600 leading-none">
+      Quotation Submission Portal
+    </p>
+  </div>
+</div>
+         
           </div>
 
           {isSubmitted ? (
