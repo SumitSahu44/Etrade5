@@ -27,7 +27,7 @@ const ProductMarketplace = () => {
       name: "Air-Jet Weaving Loom",
       spec: "Model: PX-2026 | High Speed",
       img: "https://img.freepik.com/premium-photo/high-angle-closeup-shot-colorful-textiles-with-beautiful-asian-patterns_926199-3639020.jpg?w=1060",
-      // price: "Inquiry Only"
+      // price: "Enquiry Only"
     },
     {
       id: 3,
@@ -70,7 +70,7 @@ const ProductMarketplace = () => {
             name: p.title,
             spec: `Category: ${p.category}`,
             img: `${IMAGE_BASE_URL}/${p.image}`,
-            // price: "Inquiry Only"
+            // price: "Enquiry Only"
           }));
           setDynamicProducts(mapped);
         }
