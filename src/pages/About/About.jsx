@@ -38,7 +38,7 @@ const About = () => {
           <p className="text-slate-600 text-lg leading-relaxed font-medium">
             Is a trusted digital platform to bulk purchase and sell
             of the Textile Finished Products, Textile Raw Materials, Textile Machineries and Spares.
-            It provides a vast digital platform for the Textile manufacturers and suppliers to grow
+            It provides a vast digital platform for the Textile manufacturer and supplier to grow
             their sell and purchase graph at their expected price and quality.
           </p>
         </div>

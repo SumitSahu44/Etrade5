@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Filter, ArrowUpRight, Box, Zap, ShieldCheck, Info } from 'lucide-react';
 import { productApi, categoryApi, IMAGE_BASE_URL } from '../../utils/api';
-
+import { Link } from 'react-router-dom';
 const ProductMarketplace = () => {
   const [activeCategory, setActiveCategory] = useState('All');
   const [dynamicProducts, setDynamicProducts] = useState([]);
   const [dynamicCategories, setDynamicCategories] = useState(['All']);
   const [loading, setLoading] = useState(true);
+  
 
   const categories = ['All', 'Raw Materials', 'Finished Fabrics', 'Machinery', 'Spares'];
 
@@ -160,9 +161,11 @@ const ProductMarketplace = () => {
                   {/* Action Overlay */}
                   <div className="absolute inset-0 bg-gradient-to-t from-blue-900/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                   <div className="absolute bottom-6 right-6 translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-500">
+                   <Link to={`/enquiry/`}>
                     <div className="bg-white p-4 rounded-2xl text-blue-600 shadow-2xl hover:bg-blue-600 hover:text-white transition-colors">
                       <ArrowUpRight size={24} />
                     </div>
+                    </Link>
                   </div>
                 </div>
 
@@ -177,9 +180,9 @@ const ProductMarketplace = () => {
 
                   <div className="flex justify-between items-center pt-4 border-t border-slate-100">
                     <span className="text-lg font-bold text-slate-700 tracking-tight">{product.price}</span>
-                    <button className="text-[11px] font-black text-blue-600 uppercase tracking-widest group-hover:translate-x-1 transition-transform">
-                      Inquire →
-                    </button>
+                    <Link to={`/enquiry/`} className="text-[11px] font-black text-blue-600 uppercase tracking-widest group-hover:translate-x-1 transition-transform">
+                      Enquiry →
+                    </Link>
                   </div>
                 </div>
               </motion.div>
