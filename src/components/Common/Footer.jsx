@@ -35,7 +35,7 @@ const Footer = () => {
           <div className="space-y-6">
 
             {/* ✅ Perfect Alignment */}
-            <Link to="/" className="flex items-center gap-4">
+            <Link to="/" className="flex items-center gap-1">
 
               {/* Logo */}
               <div className="rounded-xl shadow-md">
