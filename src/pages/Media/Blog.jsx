@@ -58,7 +58,7 @@ const Blog = () => {
                 {/* Thumbnail */}
                 <div className="relative h-64 overflow-hidden">
                   <img
-                    src={`${IMAGE_BASE_URL}${blog.thumbnail}`}
+                    src={blog.thumbnail?.startsWith("http") ? blog.thumbnail : `${IMAGE_BASE_URL}/${blog.thumbnail}`}
                     alt={blog.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition duration-700"
                   />

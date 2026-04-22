@@ -31,7 +31,7 @@ const MediaBlog = () => {
       ${idx === 3 ? 'col-span-2 md:col-span-2' : ''}`}
     >
       <img
-        src={`${IMAGE_BASE_URL}${item.image}`}
+        src={item.image?.startsWith("http") ? item.image : `${IMAGE_BASE_URL}/${item.image}`}
         alt="Media"
         className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
       />

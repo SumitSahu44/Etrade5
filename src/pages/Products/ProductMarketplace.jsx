@@ -69,7 +69,7 @@ const ProductMarketplace = () => {
             category: p.category,
             name: p.title,
             spec: `Category: ${p.category}`,
-            img: `${IMAGE_BASE_URL}/${p.image}`,
+            img: p.image?.startsWith("http") ? p.image : `${IMAGE_BASE_URL}/${p.image}`,
             // price: "Enquiry Only"
           }));
           setDynamicProducts(mapped);

@@ -5,7 +5,7 @@ import { MapPin } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
- const accentBlue = "#2563eb";
+  const accentBlue = "#2563eb";
 
   const Icons = {
     Linkedin: () => (
@@ -47,28 +47,28 @@ const Footer = () => {
               </div>
 
               {/* Text */}
-             <div className="flex flex-col justify-center">
-  {/* Line 1: PAREKH (White) */}
-  <span className="text-[13px] md:text-[14px] font-black text-white leading-none">
-    PAREKH
-  </span>
+              <div className="flex flex-col justify-center">
+                {/* Line 1: PAREKH (White) */}
+                <span className="text-[13px] md:text-[14px] font-black text-white leading-none">
+                  PAREKH
+                </span>
 
-  {/* Line 2: e-TRADE Market (Textile) (Blue) */}
-  <div className="flex items-baseline gap-1 mt-0.5">
-    <span style={{ color: accentBlue }}  className="text-[12px] md:text-[13px] font-black leading-none">
-      e-TRADE
-    </span>
-    <span style={{ color: accentBlue }} className="text-[12px] md:text-[13px]  font-black uppercase">
-      Market (Textile)
-    </span>
-  </div>
+                {/* Line 2: e-TRADE Market (Textile) (Blue) */}
+                <div className="flex items-baseline gap-1 mt-0.5">
+                  <span style={{ color: accentBlue }} className="text-[12px] md:text-[13px] font-black leading-none">
+                    e-TRADE
+                  </span>
+                  <span style={{ color: accentBlue }} className="text-[12px] md:text-[13px]  font-black uppercase">
+                    Market (Textile)
+                  </span>
+                </div>
 
-  {/* Line 3: Location (Slate/Greyish) */}
-  <div className="flex items-center text-[8px] font-black text-slate-100 uppercase mt-0.5">
-    <MapPin size={9} className="mr-0.5" />
-     <span className="tracking-wider">Hyderabad, TG, India</span>
-  </div>
-</div>
+                {/* Line 3: Location (Slate/Greyish) */}
+                <div className="flex items-center text-[8px] font-black text-slate-100 uppercase mt-0.5">
+                  <MapPin size={9} className="mr-0.5" />
+                  <span className="tracking-wider">Hyderabad, TG, India</span>
+                </div>
+              </div>
             </Link>
 
             <p className="text-sm leading-relaxed">
@@ -137,7 +137,7 @@ const Footer = () => {
 
         {/* Bottom */}
         <div className="pt-6 border-t border-slate-900 flex flex-col md:flex-row justify-between items-center gap-3 text-xs">
-          <p>© {new Date().getFullYear()} PAREKH e-TRADE</p>
+          <p>© {new Date().getFullYear()} PAREKH e-TRADE MARKET (TEXTILE)</p>
 
           <button
             onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
