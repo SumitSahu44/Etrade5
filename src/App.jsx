@@ -67,7 +67,7 @@ function App() {
                   <Hero />
                   <ProductServices />
                   <AssociatesMap />
-                  <Tenders />
+                  {/* <Tenders /> */}
                   <MediaBlog />
                 </>
               }

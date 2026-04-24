@@ -16,14 +16,14 @@ const AssociatesMap = () => {
         transition={{ duration: 0.8 }}
         className="w-full max-w-4xl px-4"
       >
-        <div className="rounded-[2.5rem] overflow-hidden border-8 border-white">
+        <div className="overflow-hidden  bg-black">
 
           <video
             autoPlay
             muted
             loop
             playsInline
-            className="w-full mt-[-50px] h-full object-cover"
+            className="w-full h-full object-contain"
           >
             <source src="/videos/india-map.mp4" type="video/mp4" />
             Your browser does not support the video tag.
