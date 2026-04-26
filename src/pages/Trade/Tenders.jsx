@@ -68,8 +68,8 @@ const Tenders = () => {
             <div className="w-20 h-20 bg-blue-500/10 text-blue-500 rounded-3xl flex items-center justify-center mx-auto mb-8 shadow-inner border border-blue-500/20">
               <Info size={40} />
             </div>
-            <h3 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter mb-6">
-              ( At present, No EOI published .)
+            <h3 className="text-xl md:text-5xl font-black text-white uppercase tracking-tighter mb-6">
+              ( At present, No EOI published )
             </h3>
             {/* <p className="text-slate-400 font-medium max-w-lg mx-auto leading-relaxed">
               We're currently preparing new expression of interest (EOI) opportunities. Verified members will be notified as soon as new contracts are listed.
