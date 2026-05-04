@@ -48,7 +48,11 @@ const SellerPlatform = () => {
       const response = await fetch(`${API_BASE_URL}/authorized-person/validate`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name: authName, code: authCode })
+        body: JSON.stringify({ 
+          name: authName, 
+          code: authCode,
+          siteId: 'ParekheTradeMarket02'
+        })
       });
       const data = await response.json();
       if (data.success) {
