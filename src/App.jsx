@@ -68,7 +68,7 @@ function App() {
                   <ProductServices />
                   <AssociatesMap />
                   {/* <Tenders /> */}
-                  <MediaBlog />
+                  {/* <MediaBlog /> */}
                 </>
               }
             />
